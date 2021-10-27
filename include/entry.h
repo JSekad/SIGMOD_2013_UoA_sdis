@@ -4,22 +4,17 @@ typedef struct NodeTag {
     Payload payload;
     word w;                                            /*hide dummy*/
     struct NodeTag *Link;
-} Entry;
+} entry;
 
 
-typedef struct NodeTag {
-    int numOfNodes;
-    struct NodeTag *first;                                             /*hide dummy*/
-    struct NodeTag *last;
-} Entry_List;
 
-Entry * CreateEntry(const char *,void *);
+entry * Createentry(const char *,void *);
 
-void DestroyEntry(Entry *);
+void Destroyentry(entry *);
 
 void InsertWord(const char *);
 
-Entry * InsertNextEntry (Entry *previous,Entry *next);
+entry * InsertNextEntry (entry *previous,entry *next);
 
 
 

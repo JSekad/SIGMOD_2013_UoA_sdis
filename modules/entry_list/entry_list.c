@@ -4,17 +4,17 @@
 #include <string.h>
 #include <stdlib.h>
 
-Entry_List *Create()
+entry_list *Create()
 {
-    Entry *N;
-    N=(Entry *)malloc(sizeof(Entry));
+    entry *N;
+    N=(entry *)malloc(sizeof(entry));
     N->Link=NULL;
     return N;
 }
-void Destroy(Entry_List *L){
-    Entry *current=L->first;
+void Destroy(entry_list *L){
+    entry *current=L->first;
     while(current->Link){
-        Entry *next=current->Link; 
+        entry *next=current->Link; 
         free(current);
         current=next;
         
@@ -23,23 +23,23 @@ void Destroy(Entry_List *L){
     free(L);
 
 }
-void PrintList(Entry_List *L)
+void PrintList(entry_list *L)
 {
     printf("(");
-    Entry *N=L->first;
+    entry *N=L->first;
     while(N->Link != NULL) {
         N=N->Link;
-        printf("%s", N->word);
+        printf("%s", N->w);
         if (N->Link!=NULL) printf(",");
     }
     printf(")\n");
 }
 
-void InsertLast(Entry_List *L, Item A)
-{   Entry *M=L->first;
-    Entry *N;
-    N=(Entry *)malloc(sizeof(Entry));
-    strcpy(N->word, A);
+void InsertLast(entry_list *L, word A)
+{   entry *M=L->first;
+    entry *N;
+    N=(entry *)malloc(sizeof(entry));
+    strcpy(N->w, A);
     N->Link=NULL;
     if (M->Link == NULL) {
         M->Link=N;
@@ -50,36 +50,35 @@ void InsertLast(Entry_List *L, Item A)
     }
 }
 
-Entry *search(Entry_List *L,Item A)                    /* pointer returning first node*/
-{Entry *N=L->first;
+entry *search(entry_list *L,word A)                    /* pointer returning first node*/
+{entry *N=L->first;
     while (N->Link!=NULL)
     {
         N=N->Link;
-        if (!strcmp(N->word,A)) return N;
+        if (!strcmp(N->w,A)) return N;
     }
     return NULL;
 }
-void InsertAfter(Entry_List *L,Item A,Entry *node)
+void InsertAfter(entry_list *L,word A,entry *node)
 {
-    Entry *temp,*new;
+    entry *temp,*new;
     temp=node->Link;
-    new=(Entry*)malloc(sizeof(Entry));
-    strcpy(new->word,A);
+    new=(entry*)malloc(sizeof(entry));
+    strcpy(new->w,A);
     new->Link=temp;
     node->Link=new;
 }
 
-void DeleteLast(Entry_List *L)
-{  Entry *d=L->last;
+void DeleteLast(entry_list *L)
+{  entry *d=L->last;
 
-    
 
     
     free(d);
 }
 
-void Delete(Entry_List *L,Entry *node)
-{  Entry *prev,*next;
+void Delete(entry_list *L,entry *node)
+{  entry *prev,*next;
 
     while((L=L->Link)!=node)
     {   prev=L;

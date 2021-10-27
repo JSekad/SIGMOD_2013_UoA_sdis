@@ -1,10 +1,15 @@
+typedef struct NodeTag {
+    int numOfNodes;
+    struct entry *first;                                             /*hide dummy*/
+    struct entry *last;
+} entry_list;
 
 
-void  Delete(Entry_List *,Entry *);
-  void InsertLast(Entry_List * ,word);
-  void PrintList(Entry_List *);
-  Entry_List *Create(void);
-  Entry *search(Entry_List *,word);
-  void InsertAfter(Entry_List *,word,Entry *);
-  void DeleteLast(Entry_List *);
-  void Destroy(Entry_List *);
+void  Delete(entry_list *,entry *);
+  void InsertLast(entry_list * ,word);
+  void PrintList(entry_list *);
+  entry_list *Create(void);
+  entry *search(entry_list *,word);
+  void InsertAfter(entry_list *,word,entry *);
+  void DeleteLast(entry_list *);
+  void Destroy(entry_list *);

@@ -1,9 +1,16 @@
-Entry * CreateEntry(char *w,void *payload){
+#include "../include/entry_list.h"
+#include "../include/entry.h"
+
+
+
+
+entry * CreateEntry(char *w,void *payload){
+    
 
 }
 
-void DestroyEntry(Entry *);
+void DestroyEntry(entry *);
 
 void InsertWord(const char *);
 
-Entry * InsertNextEntry (Entry *previous,Entry *next);
+entry * InsertNextEntry (entry *previous,entry *next);
