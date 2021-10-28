@@ -5,23 +5,22 @@
 
 
 
-entry * CreateEntry(char *string,void *payload){
+entry * CreateEntry(char *string,Payload payload){
     
-        printf("CreateEntry\n"); 
+    
+    printf("CreateEntry\n"); 
         
     entry *new_entry=malloc(sizeof(entry));
 
-
     
-    if (payload!=NULL) {
-        new_entry->payload=payload;
-    }
-    if (string!=NULL)  {
-         new_entry->w=malloc(sizeof(string));
-         strcpy(new_entry->w,string);
-    }
+    
+   new_entry->next=NULL;
+   new_entry->payload=payload;
+   new_entry->prev=NULL;
+   new_entry->w=malloc(sizeof(string));
+   strcpy(new_entry->w,string);
 
-    printf("CreateEntry\n"); 
+    printf("CreateEntry exiting \n"); 
 
     return new_entry;
 
@@ -30,7 +29,9 @@ entry * CreateEntry(char *string,void *payload){
 
 void DestroyEntry(entry *e){
 
-    free(e->payload);
+    
+
+   // free(e->payload);
     free(e->w);
     free(e);
     

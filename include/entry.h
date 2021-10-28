@@ -13,7 +13,7 @@ typedef struct NodeTag{
 
 
 
-entry * CreateEntry(char *,void *);
+entry * CreateEntry(char *,Payload );
 
 void DestroyEntry(entry *);
 

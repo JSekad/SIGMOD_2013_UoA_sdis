@@ -25,18 +25,24 @@ void DestroyEntryList(entry_list *L){
         
     }
     free(current);}
-    
+
     free(L);
 
 }
 void PrintEntryList(entry_list *L)
 {
     printf("(");
+
     entry *N=(entry *)L->first;
+    if (!N){
+         printf("())\n");
+        return; 
+    } 
     while(N->next != NULL) {
-        N=(entry *)N->next;
+       
         printf("%s", N->w);
         if (N->next!=NULL) printf(",");
+         N=(entry *)N->next;
     }
     printf("%s", N->w);
     if (N->next!=NULL) printf(",");
@@ -47,9 +53,36 @@ void PrintEntryList(entry_list *L)
 void InsertLastEntryList(entry_list *L, entry *e)
 {   
     if (L->numOfNodes>0){
-        entry *m=(entry *)L->last;
-        InsertNextEntry((entry *)m->next,e);
+        entry *m=L->last;
+        m->next=e;
         L->last=e;
+        e->prev=m;
+        L->numOfNodes++;
+        return;
+     }
+    
+    if (L->numOfNodes==0){
+        L->last=e;
+        L->first=e;
+        e->next=NULL;
+        e->prev=NULL;
+        L->numOfNodes++;
+        return;
+    }
+
+    
+
+}
+
+
+
+void InsertFirstEntryList(entry_list *L, entry *e)
+{   
+    if (L->numOfNodes>0){
+        entry *m=L->first;
+        m->prev=e;
+        L->first=e;
+        e->next=m;
         L->numOfNodes++;
         return;
      }
@@ -66,7 +99,7 @@ void InsertLastEntryList(entry_list *L, entry *e)
 
 }
 
-entry *search(entry_list *L,word A)                    /* pointer returning first node*/
+entry *search(entry_list *L,word A)                    
 {entry *N=(entry *)L->first;
     while (N->next!=NULL)
     {
@@ -91,7 +124,8 @@ void DeleteLastEntryList(entry_list *L)
      
     L->last=d->prev; 
     if (L->numOfNodes==1){
-         L->first=NULL; 
+         L->first=NULL;
+         L->last=NULL; 
          L->numOfNodes--;   
          free(d);
          return;}
@@ -103,18 +137,84 @@ void DeleteLastEntryList(entry_list *L)
     }     
 }
 
+void DeleteFirstEntryList(entry_list *L)
+{  entry *d=(entry *)L->first;
+     
+    L->first=d->next; 
+    if (L->numOfNodes==1){
+         L->first=NULL;
+         L->last=NULL; 
+         L->numOfNodes--;   
+         free(d);
+         return;}
+    if (L->numOfNodes>1){
+        ((entry *)L->first)->prev=NULL;
+        L->numOfNodes--;
+        free(d);
+        return;
+    }     
+}
 
-void Delete(entry_list *L,entry *node)
-{  entry *prev,*next;
-   entry *e=L->first;  
 
-    while(strcmp(e->w,node->w)){  
+
+
+void DeleteEntryEntryList(entry_list *L,entry *node)
+{   printf("Entry List\n");
+   entry *e=(entry *)L->first;  
+    
+
+    if (L->numOfNodes==1){
+        if (!strcmp(e->w,node->w)){
+           
+           
+            
+           
+            
+            DestroyEntry(e);
+            L->numOfNodes--;
+            L->first=NULL;
+            L->last=NULL;
+        }
+         
+        return;
+    } 
+   
+    printf("Entry List 2\n");
+    
+
+    while(strcmp(e->w,node->w) ){ 
+        printf("strcmp %s %s\n",e->w,node->w); 
          e=e->next;   
     }
 
-    ((entry *)e->prev)->next=e->next; 
-    DestroyEntry(e);
-    L->numOfNodes--;
+    printf("Entry List 3\n");
     
+
+    if ((e->prev) && (e->next)){
+
+        e->prev->next=e->next;
+        e->next->prev=e->prev;
+        DestroyEntry(e);
+        L->numOfNodes--;
+        return;
+    
+    }
+
+    if (!e->prev){
+        e->next->prev=e->prev;
+        DestroyEntry(e);
+        L->numOfNodes--;
+        return;
+
+    } 
+
+    if (!e->next){
+        e->prev->next=e->next;
+        DestroyEntry(e);
+        L->numOfNodes--;
+        return;
+
+    }
+        
     
 }
