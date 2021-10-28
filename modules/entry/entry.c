@@ -1,16 +1,33 @@
-#include "../include/entry_list.h"
-#include "../include/entry.h"
+#include "../../include/entry_list.h"
+#include <stdlib.h>
+#include <string.h>
 
 
 
+entry * CreateEntry(char *string,void *payload){
+    entry *new_entry=malloc(sizeof(entry));
+    new_entry->payload=payload;
+    new_entry->w=malloc(sizeof(string));
+    strcpy(new_entry->w,string);
 
-entry * CreateEntry(char *w,void *payload){
-    
+
+    return new_entry;
+
 
 }
 
-void DestroyEntry(entry *);
+void DestroyEntry(entry *e){
 
-void InsertWord(const char *);
+    free(e->payload);
+    free(e->w);
+    free(e);
+    
+}
 
-entry * InsertNextEntry (entry *previous,entry *next);
+
+
+entry * InsertNextEntry (entry *previous,entry *next){
+    previous->next=(struct NodeTag *)next;
+    next->prev=(struct NodeTag *)previous;
+
+}
