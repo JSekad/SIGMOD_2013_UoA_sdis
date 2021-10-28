@@ -1,15 +1,27 @@
 #include "../../include/entry_list.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 
 
 entry * CreateEntry(char *string,void *payload){
+    
+        printf("CreateEntry\n"); 
+        
     entry *new_entry=malloc(sizeof(entry));
-    new_entry->payload=payload;
-    new_entry->w=malloc(sizeof(string));
-    strcpy(new_entry->w,string);
 
+
+    
+    if (payload!=NULL) {
+        new_entry->payload=payload;
+    }
+    if (string!=NULL)  {
+         new_entry->w=malloc(sizeof(string));
+         strcpy(new_entry->w,string);
+    }
+
+    printf("CreateEntry\n"); 
 
     return new_entry;
 
