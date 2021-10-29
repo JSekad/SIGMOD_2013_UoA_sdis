@@ -11,6 +11,8 @@ entry * CreateEntry(char *string,Payload payload){
         
     entry *new_entry=(entry *)malloc(sizeof(entry));
 
+    new_entry->prev=NULL;
+    new_entry->next=NULL;
     
     if (payload!=NULL) {
         new_entry->payload=payload;
