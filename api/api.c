@@ -9,25 +9,26 @@ enum error_code create_entry(const word w, entry** e){
     printf("%s\n",(*e)->w);
     return Working;
 
-
 }
 
- ErrorCode destroy_entry(entry *e);
+enum error_code destroy_entry(entry *e){
+    return Working;
+};
 
- ErrorCode create_entry_list(entry_list* el);
+enum error_code create_entry_list(entry_list* el);
 
  unsigned int get_number_entries(const entry_list* el);
 
- ErrorCode add_entry(entry_list* el, const entry* e);
+enum error_code add_entry(entry_list* el, const entry* e);
 
  entry* get_first(const entry_list* el);
 
  entry* get_next(const entry_list* el);
 
- ErrorCode destroy_entry_list(entry_list* el);
+enum error_code destroy_entry_list(entry_list* el);
 
- ErrorCode build_entry_index(const entry_list* el,  MatchType type, index* ix);
+enum error_code build_entry_index(const entry_list* el,  MatchType type, index* ix);
 
- ErrorCode lookup_entry_index(const word* w, index* ix, int threshold, entry_list* result);
+enum error_code lookup_entry_index(const word* w, index* ix, int threshold, entry_list* result);
 
- ErrorCode destroy_entry_index(index* ix);
+enum error_code destroy_entry_index(index* ix);

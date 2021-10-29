@@ -7,7 +7,6 @@
 
 entry * CreateEntry(char *string,Payload payload){
     
-    
     printf("CreateEntry\n");
         
     entry *new_entry=(entry *)malloc(sizeof(entry));
@@ -21,7 +20,7 @@ entry * CreateEntry(char *string,Payload payload){
          strcpy(new_entry->w,string);
     }
 
-    printf("CreateEntry exiting \n"); 
+    printf("CreateEntry  %s\n",new_entry->w);
 
     return new_entry;
 
@@ -30,9 +29,7 @@ entry * CreateEntry(char *string,Payload payload){
 
 void DestroyEntry(entry *e){
 
-    
-
-   // free(e->payload);
+    //free(e->payload);
     free(e->w);
     free(e);
     
