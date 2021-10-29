@@ -1,6 +1,6 @@
 
 typedef void* Payload;
-typedef char *word;
+typedef char* word;
 
 
 

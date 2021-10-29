@@ -2,8 +2,8 @@
 
 typedef struct  {
     int numOfNodes;
-     entry *first;                                             /*hide dummy*/
-     entry *last;
+    entry *first;                                             /*hide dummy*/
+    entry *last;
 } entry_list;
 
 

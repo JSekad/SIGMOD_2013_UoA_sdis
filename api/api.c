@@ -1,16 +1,13 @@
 #include "../include/api.h"
 
 
-ErrorCode create_entry(const word* w, entry* e){
-        printf("create_entry\n");
-        if (e->payload){
-          e=CreateEntry(w,e->payload);  
-        return EC_SUCCESS;
-        }
-        else  {
-            void *p =NULL;
-            e=CreateEntry(w,p);
-        }
+enum error_code create_entry(const word w, entry** e){
+
+    entry ** temp = e;
+    printf("create_entry\n");
+    *temp=CreateEntry(w,NULL);
+    printf("%s\n",(*e)->w);
+    return Working;
 
 
 }

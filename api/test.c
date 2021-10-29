@@ -10,6 +10,7 @@ int main(){
     entry *e=CreateEntry(c,p);
 
 
+    printf("%s\n",e->w);
     InsertLastEntryList(l,e);
 
 
@@ -22,17 +23,22 @@ int main(){
 
     entry *e2;
 
-    ErrorCode code= create_entry(e->w,e2);
+
+    if (Working == create_entry(e->w,&e2)){
+        printf("OKKKK\n");
+        //printf("%s",e2->w);
+
+    }
     
     printf("after create entry\n");
 
-    if (code==EC_SUCCESS){
-        InsertLastEntryList(l,e2);
-       
-    }
-    else{
-        printf("something went wrong\n");
-    }
+//    if (code==EC_SUCCESS){
+//        InsertLastEntryList(l,e2);
+//
+//    }
+//    else{
+//        printf("something went wrong\n");
+//    }
    
 
     

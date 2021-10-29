@@ -6,7 +6,7 @@ typedef bktree index;
 
 ErrorCode create_entry(const word* w, entry* e);
 
-ErrorCode destroy_entry(entry *e);
+enum error_code create_entry(const word w, entry** e);
 
 ErrorCode create_entry_list(entry_list* el);
 
