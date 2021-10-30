@@ -112,13 +112,14 @@ void InsertFirstEntryList(entry_list *L, entry *e)
 
 }
 
-entry *search(entry_list *L,word A)                    
+entry *searchEntryList(entry_list *L,word w)                  
 {entry *N=(entry *)L->first;
     while (N->next!=NULL)
     {
         N=N->next;
-        if (!strcmp(N->w,A)) return N;
+        if (!strcmp(N->w,w)) return N;
     }
+    if (!strcmp(N->w,w)) return N;
 
     return NULL;
 }

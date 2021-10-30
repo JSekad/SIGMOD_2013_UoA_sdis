@@ -29,7 +29,8 @@ int main(){
 
 
       InsertLastEntryList(l,e);
-
+      
+       printf("entryList %s" ,searchEntryList(l,e->w)->w);
 
 //     PrintEntryList(l);
 
