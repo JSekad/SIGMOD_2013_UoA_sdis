@@ -15,22 +15,29 @@ entry_list *CreateEntryList()
 
 
 void DestroyEntryList(entry_list *L){
+
   if (L->numOfNodes>0){  
+
     entry *current=(entry *)L->first;
+
     while(current->next){
         entry *next=(entry *)current->next; 
-        free(current);
+        DestroyEntry(current);
         current=next;
         
         
     }
-    free(current);}
+
+    DestroyEntry(current);}
 
     free(L);
 
 }
-void PrintEntryList(entry_list *L)
-{
+
+
+
+void PrintEntryList(entry_list *L){
+    
     printf("(");
 
     entry *N=(entry *)L->first;
@@ -51,21 +58,27 @@ void PrintEntryList(entry_list *L)
 }
 
 void InsertLastEntryList(entry_list *L, entry *e)
-{   
+{ 
+  printf("L->numOfNodes %d\n",L->numOfNodes);
+  entry *m=CreateEntry(e->w,e->payload);
+
     if (L->numOfNodes>0){
-        entry *m=L->last;
-        m->next=e;
-        L->last=e;
-        e->prev=m;
+        printf("in numOfNodes>0 %d\n",L->numOfNodes);
+        m->prev=L->last;
+        L->last->next=m;
+        L->last=m;
+        m->next=NULL;
         L->numOfNodes++;
         return;
      }
     
     if (L->numOfNodes==0){
-        L->last=e;
-        L->first=e;
-        e->next=NULL;
-        e->prev=NULL;
+        printf("in numOfNodes==0  %d\n",L->numOfNodes);
+        
+        L->last=m;
+        L->first=m;
+        m->next=NULL;
+        m->prev=NULL;
         L->numOfNodes++;
         return;
     }
@@ -77,21 +90,21 @@ void InsertLastEntryList(entry_list *L, entry *e)
 
 
 void InsertFirstEntryList(entry_list *L, entry *e)
-{   
+{   entry *new_entry=CreateEntry(e->w,e->payload);
     if (L->numOfNodes>0){
         entry *m=L->first;
-        m->prev=e;
-        L->first=e;
-        e->next=m;
+        m->prev=new_entry;
+        L->first=new_entry;
+        new_entry->next=m;
         L->numOfNodes++;
         return;
      }
     
     if (L->numOfNodes==0){
-        L->last=e;
-        L->first=e;
-        e->next=NULL;
-        e->prev=NULL;
+        L->last=new_entry;
+        L->first=new_entry;
+        new_entry->next=NULL;
+        new_entry->prev=NULL;
         L->numOfNodes++;
     }
 
@@ -145,12 +158,12 @@ void DeleteFirstEntryList(entry_list *L)
          L->first=NULL;
          L->last=NULL; 
          L->numOfNodes--;   
-         free(d);
+         DestroyEntry(d);
          return;}
     if (L->numOfNodes>1){
         ((entry *)L->first)->prev=NULL;
         L->numOfNodes--;
-        free(d);
+        DestroyEntry(d);
         return;
     }     
 }
@@ -165,9 +178,6 @@ void DeleteEntryEntryList(entry_list *L,entry *node)
 
     if (L->numOfNodes==1){
         if (!strcmp(e->w,node->w)){
-           
-           
-            
            
             
             DestroyEntry(e);
@@ -184,7 +194,7 @@ void DeleteEntryEntryList(entry_list *L,entry *node)
 
     while(strcmp(e->w,node->w) ){ 
         printf("strcmp %s %s\n",e->w,node->w); 
-         e=e->next;   
+        if (! (e=e->next)) return;    
     }
 
     printf("Entry List 3\n");

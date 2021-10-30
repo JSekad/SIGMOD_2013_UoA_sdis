@@ -1,3 +1,4 @@
 .code
 *.o
 a.out
+*.exe
