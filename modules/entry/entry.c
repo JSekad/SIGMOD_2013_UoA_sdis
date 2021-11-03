@@ -4,43 +4,41 @@
 #include <stdio.h>
 
 
+ent *CreateEntry(char *string, Payload payload) {
 
-entry * CreateEntry(char *string,Payload payload){
-    
     printf("CreateEntry\n");
-        
-    entry *new_entry=(entry *)malloc(sizeof(entry));
 
-    new_entry->prev=NULL;
-    new_entry->next=NULL;
-    
-    if (payload!=NULL) {
-        new_entry->payload=payload;
+    ent *new_entry = (ent *) malloc(sizeof(ent));
+
+    new_entry->prev = NULL;
+    new_entry->next = NULL;
+
+    if (payload != NULL) {
+        new_entry->payload = payload;
     }
-    if (string!=NULL)  {
-         new_entry->w=(char*)malloc(sizeof(char)*(strlen(string)+1));
-         strcpy(new_entry->w,string);
+    if (string != NULL) {
+        new_entry->w = (char *) malloc(sizeof(char) * (strlen(string) + 1));
+        strcpy(new_entry->w, string);
     }
 
-    printf("CreateEntry  %s\n",new_entry->w);
+    printf("CreateEntry  %s\n", new_entry->w);
 
     return new_entry;
 
 
 }
 
-void DestroyEntry(entry *e){
+void DestroyEntry(ent *e) {
 
     //free(e->payload);
     free(e->w);
     free(e);
-    
+
 }
 
 
-
-entry * InsertNextEntry (entry *previous,entry *next){
-    previous->next=(struct NodeTag *)next;
-    next->prev=(struct NodeTag *)previous;
+ent *InsertNextEntry(ent *previous, ent *next) {
+    previous->next = (struct NodeTag *) next;
+    next->prev = (struct NodeTag *) previous;
 
 }

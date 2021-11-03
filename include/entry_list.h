@@ -1,20 +1,30 @@
 #include "entry.h"
 
-typedef struct  {
+typedef struct {
     int numOfNodes;
-    entry *first;                                             /*hide dummy*/
-    entry *last;
+    ent *first;                                             /*hide dummy*/
+    ent *last;
 } entry_list;
 
 
 entry_list *CreateEntryList(void);
-void  DeleteEntryList(entry_list *,entry *);
-void InsertLastEntryList(entry_list * ,entry *);
-void InsertFirstEntryList(entry_list * ,entry *);
+
+void DeleteEntryList(entry_list *, ent *);
+
+void InsertLastEntryList(entry_list *, ent *);
+
+void InsertFirstEntryList(entry_list *, ent *);
+
 void PrintEntryList(entry_list *);
-entry *searchEntryList(entry_list *,word);
-void InsertAfterEntryList(entry_list *,entry*,entry *);
+
+ent *searchEntryList(entry_list *, word);
+
+void InsertAfterEntryList(entry_list *, ent *, ent *);
+
 void DeleteLastEntryList(entry_list *);
+
 void DeleteFirstEntryList(entry_list *);
-void DeleteEntryEntryList(entry_list *,entry*);
+
+void DeleteEntryEntryList(entry_list *, ent *);
+
 void DestroyEntryList(entry_list *);

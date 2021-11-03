@@ -1,25 +1,25 @@
 
-typedef void* Payload;
-typedef char* word;
+typedef void *Payload;
+typedef char *word;
 
 
-
-typedef struct NodeTag{
+typedef struct NodeTag {
     Payload payload;
     word w;                                            /*hide dummy*/
-    struct NodeTag *next; 
+    struct NodeTag *next;
     struct NodeTag *prev;
-} entry;
+} ent;
+
+typedef ent *entry;
 
 
+ent *CreateEntry(char *, Payload);
 
-entry * CreateEntry(char *,Payload );
-
-void DestroyEntry(entry *);
+void DestroyEntry(ent *);
 
 void InsertWord(const char *);
 
-entry * InsertNextEntry (entry *previous,entry *next);
+ent *InsertNextEntry(ent *previous, ent *next);
 
 
 
