@@ -14,7 +14,6 @@ typedef struct NodeTag{
 
 
 entry * CreateEntry(char *,Payload );
-
 void DestroyEntry(entry *);
 
 void InsertWord(const char *);
