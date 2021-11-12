@@ -2,7 +2,7 @@ objects=entry.o entry_list.o api.o test.o
 
 main: $(objects)
 	gcc $(objects) -o Api
-	./Api
+	valgrind --leak-check=full --leak-resolution=med --track-origins=yes --trace-children=yes ./Api
 
 entry.o: modules/entry/entry.c
 	gcc -c modules/entry/entry.c

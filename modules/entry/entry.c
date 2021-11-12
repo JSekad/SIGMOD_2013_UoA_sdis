@@ -6,7 +6,6 @@
 
 ent *CreateEntry(char *string, Payload payload) {
 
-    printf("CreateEntry\n");
 
     ent *new_entry = (ent *) malloc(sizeof(ent));
 
@@ -21,19 +20,18 @@ ent *CreateEntry(char *string, Payload payload) {
         strcpy(new_entry->w, string);
     }
 
-    printf("CreateEntry  %s\n", new_entry->w);
+    printf("Entry \"%s\" created\n", new_entry->w);
 
     return new_entry;
 
 
 }
 
-void DestroyEntry(ent *e) {
-
+void DestroyEntry(ent **e) {
     //free(e->payload);
-    free(e->w);
-    free(e);
-
+    free((*e)->w);
+    free((*e));
+    (*e)=NULL;
 }
 
 

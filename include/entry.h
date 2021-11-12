@@ -15,7 +15,7 @@ typedef ent *entry;
 
 ent *CreateEntry(char *, Payload);
 
-void DestroyEntry(ent *);
+void DestroyEntry(ent **);
 
 void InsertWord(const char *);
 
