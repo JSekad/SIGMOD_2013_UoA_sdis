@@ -8,7 +8,7 @@
 
 int main(){
 
-    entry_list *l=CreateEntryList();
+    Entry_list *l=CreateEntryList();
 
 
     char *c="the name";

@@ -1,30 +1,42 @@
 #include "entry.h"
 
-typedef struct {
+typedef struct Nodee{
     int numOfNodes;
-    ent *first;                                             /*hide dummy*/
-    ent *last;
-} entry_list;
+    entry current;
+    entry first;                                             /*hide dummy*/
+    entry last;
+} Entry_list;
+
+typedef Entry_list * entry_list;
 
 
-entry_list *CreateEntryList(void);
+Entry_list *CreateEntryList();
 
-void DeleteEntryList(entry_list *, ent *);
+void InsertLastEntryList(Entry_list *, ent *);
 
-void InsertLastEntryList(entry_list *, ent *);
+void DestroyEntryList(Entry_list **);
 
-void InsertFirstEntryList(entry_list *, ent *);
+entry * getFirstEntryOfList(Entry_list*);
 
-void PrintEntryList(entry_list *);
+entry * getNextEntryOfList(Entry_list*);
 
-ent *searchEntryList(entry_list *, word);
 
-void InsertAfterEntryList(entry_list *, ent *, ent *);
+/* COMMENT FOR FUTURE USE
 
-void DeleteLastEntryList(entry_list *);
+void DeleteEntryList(Entry_list *, ent *);
 
-void DeleteFirstEntryList(entry_list *);
+void InsertFirstEntryList(Entry_list *, ent *);
 
-void DeleteEntryEntryList(entry_list *, ent *);
+void PrintEntryList(Entry_list *);
 
-void DestroyEntryList(entry_list *);
+ent *searchEntryList(Entry_list *, word);
+
+void InsertAfterEntryList(Entry_list *, ent *, ent *);
+
+void DeleteLastEntryList(Entry_list *);
+
+void DeleteFirstEntryList(Entry_list *);
+
+void DeleteEntryEntryList(Entry_list *, ent *);
+ */
+
