@@ -16,11 +16,11 @@ int main(){
     ent *e=CreateEntry(c,p);
 
     char *c2="the name 2";
-    Payload *p2;
+    Payload *p2=NULL;
     ent *e2=CreateEntry(c2,p2);
 
     char *c3="the name 3";
-    Payload *p3;
+    Payload *p3=NULL;
     ent *e3=CreateEntry(c3,p3);
 
 

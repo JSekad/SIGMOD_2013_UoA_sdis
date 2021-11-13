@@ -1,7 +1,12 @@
-#include "distance.h"
+#include "../../include/distance.h"
 #include <stdlib.h>
 #include <math.h>
-#include "string.h"
+#include <string.h>
+#include <stdio.h>
+
+int min(int a, int b){
+    return a < b ? a : b;
+}
 
 #define MFUNC(a,b,c) min(min(a,b),c)
 

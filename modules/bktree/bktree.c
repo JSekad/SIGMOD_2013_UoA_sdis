@@ -1,8 +1,9 @@
 #ifndef MPLA
 #define MPLA
-#include "stdio.h"
-#include "bktree.h"
-#include "distance.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "../../include/bktree.h"
+#include "../../include/distance.h"
 
 node* create_tree(char* word)//if tree is empty creates the root of the tree and initializes its components
 {
@@ -48,7 +49,7 @@ void add_node(node* tree,char* word)
     }
     return;
 }
-
+/*
 entry_list* get_words(node* tree, char* word,int n)
 {
     char* posmatch[30];
@@ -65,6 +66,7 @@ entry_list* get_words(node* tree, char* word,int n)
     }
 }
 
+*/
 void delete_tree(node *tree)
 {
     node* temp= tree;
@@ -75,5 +77,11 @@ void delete_tree(node *tree)
     }
     free(tree);
 }
+
+
+
+
+
+
 
 #endif

@@ -12,6 +12,8 @@ ent *CreateEntry(char *string, Payload payload) {
 
     new_entry->prev = NULL;
     new_entry->next = NULL;
+    new_entry->payload=NULL;
+    new_entry->w=NULL;
 
     if (payload != NULL) {
         new_entry->payload = payload;
