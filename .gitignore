@@ -2,3 +2,6 @@
 *.o
 a.out
 *.exe
+tasks.json
+.vscode/
+settings.json

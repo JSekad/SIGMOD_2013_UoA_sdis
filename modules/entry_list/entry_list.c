@@ -35,11 +35,9 @@ void DestroyEntryList(Entry_list **L) {
 
 
 void InsertLastEntryList(Entry_list *L, ent *e) {
-    printf("L->numOfNodes %d\n", L->numOfNodes);
     ent *m = CreateEntry(e->w, e->payload);
 
     if (L->numOfNodes > 0) {
-        printf("in numOfNodes>0 %d\n", L->numOfNodes);
         m->prev = L->last;
         L->last->next = m;
         L->last = m;
@@ -49,7 +47,6 @@ void InsertLastEntryList(Entry_list *L, ent *e) {
     }
 
     if (L->numOfNodes == 0) {
-        printf("in numOfNodes==0  %d\n", L->numOfNodes);
 
         L->last = m;
         L->first = m;

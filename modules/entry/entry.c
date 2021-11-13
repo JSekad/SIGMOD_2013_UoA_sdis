@@ -21,8 +21,12 @@ ent *CreateEntry(char *string, Payload payload) {
         new_entry->w = (char *) malloc(sizeof(char) * (strlen(string) + 1));
         strcpy(new_entry->w, string);
     }
+    
 
-    printf("Entry \"%s\" created\n", new_entry->w);
+    if (new_entry->w==NULL) {
+        free(new_entry);
+        return NULL;
+    }
 
     return new_entry;
 
