@@ -30,7 +30,7 @@ int main(){
 
       InsertLastEntryList(l,e);
 
-       printf("entryList %s" ,searchEntryList(l,e->w)->w);
+   //    printf("entryList %s" ,searchEntryList(l,e->w)->w);
 
 //     PrintEntryList(l);
 
@@ -55,28 +55,28 @@ int main(){
 
     PrintEntryList(l);
 
-    DeleteFirstEntryList(l);
+ //   DeleteFirstEntryList(l);
 
-    DeleteFirstEntryList(l);
+  //  DeleteFirstEntryList(l);
 
     PrintEntryList(l);
 
-    DestroyEntryList(l);
+    DestroyEntryList(&l);
 
 
 
 
 
 
-    DestroyEntry(e2);
+    DestroyEntry(&e2);
 
 
 
-    DestroyEntry(e3);
+    DestroyEntry(&e3);
 
 
 
-    DestroyEntry(e);
+    DestroyEntry(&e);
 
 
 

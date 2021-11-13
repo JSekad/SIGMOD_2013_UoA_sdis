@@ -71,6 +71,32 @@ entry * getNextEntryOfList(Entry_list* e){
     return e->current == NULL ? NULL : &e->current;
 };
 
+
+void PrintEntryList(Entry_list *L) {
+
+    printf("(");
+
+    ent *N = (ent *) L->first;
+    if (!N) {
+        printf("())\n");
+        return;
+    }
+    while (N->next != NULL) {
+
+        printf("%s", N->w);
+        if (N->next != NULL) printf(",");
+        N = (ent *) N->next;
+    }
+    printf("%s", N->w);
+    if (N->next != NULL) printf(",");
+
+    printf(")\n");
+}
+
+
+
+
+
 /* MAYBE FUTURE USE
 
 ent *searchEntryList(Entry_list *L, word w) {
@@ -96,26 +122,6 @@ void InsertAfter(Entry_list *L, word A, ent *node) {
 
 
 
-void PrintEntryList(Entry_list *L) {
-
-    printf("(");
-
-    ent *N = (ent *) L->first;
-    if (!N) {
-        printf("())\n");
-        return;
-    }
-    while (N->next != NULL) {
-
-        printf("%s", N->w);
-        if (N->next != NULL) printf(",");
-        N = (ent *) N->next;
-    }
-    printf("%s", N->w);
-    if (N->next != NULL) printf(",");
-
-    printf(")\n");
-}
 
 void InsertFirstEntryList(Entry_list *L, ent *e) {
     ent *new_entry = CreateEntry(e->w, e->payload);

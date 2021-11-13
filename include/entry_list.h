@@ -21,13 +21,17 @@ entry * getFirstEntryOfList(Entry_list*);
 entry * getNextEntryOfList(Entry_list*);
 
 
+
+void PrintEntryList(Entry_list *);
+
+
+
 /* COMMENT FOR FUTURE USE
 
 void DeleteEntryList(Entry_list *, ent *);
 
 void InsertFirstEntryList(Entry_list *, ent *);
 
-void PrintEntryList(Entry_list *);
 
 ent *searchEntryList(Entry_list *, word);
 

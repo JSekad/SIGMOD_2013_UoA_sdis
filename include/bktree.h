@@ -1,11 +1,12 @@
 #include "string.h"
+#include "entry.h"
 #include "entry_list.h"
 #define LEN 30
 
 typedef struct treenode
 {
     char* word;
-    struct treenode* next[LEN];
+    node* next[LEN];
 }node;
 
 node* create_tree(char*);
@@ -17,4 +18,3 @@ void add_node(node*,char*);
 entry_list* get_words(node*,char *,int);
 
 void delete_tree(node *);
- 
