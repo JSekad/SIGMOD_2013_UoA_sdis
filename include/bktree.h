@@ -1,6 +1,7 @@
 #include "entry_list.h"
 #define LEN 30
 typedef struct treenode node;
+typedef node* inDex;
 
 struct treenode
 {

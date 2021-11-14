@@ -7,7 +7,7 @@ int main() {
 
     //Creating entries and lisofentries
 
-    char words[TESTRECORDSNUMBER][31] = {"mell","felt","hall","small","tall","sol","smell","play","sail","play"};
+    char words[TESTRECORDSNUMBER][31] = {"mell","felt","hall","small","tall","sol","smell","play","sail","ork"};
 
 
     entry_list  testel = NULL;
@@ -44,6 +44,9 @@ int main() {
         testIterator = get_next(&testel);
     }
 
+    node * tempTree = NULL;
+    build_entry_index(&testel,MT_EDIT_DIST,&tempTree);
+
 
 
     //UNTIL HERE THERE IS A LIST OF ENTRIES
@@ -52,6 +55,10 @@ int main() {
         printf("Delete Working fine\n");
     }
 
+
+    if (Working == destroy_entry_index(&tempTree)){
+        printf("Delete tree Working fine\n");
+    }
 
     printf("\nall done well\n"
            "---------------------\n"

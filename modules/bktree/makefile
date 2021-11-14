@@ -1,10 +1,14 @@
 default: bktree
 
-bktree: testtree.c bktree.o distance.o
+bktree: testtree.c
 	gcc -o bktree testtree.c bktree.o distance.o -lm
+	./bktree
 
-bktree.o: bktree.c distance.h bktree.h
-	gcc -c bktree.c 
 
-distance.o: distance.h
-	gcc -c distance.c -lm
+bktree.o: bktree.c
+	gcc -c bktree.c
+
+distance.o: distance.c
+	gcc -c -static distance.c -lm
+
+

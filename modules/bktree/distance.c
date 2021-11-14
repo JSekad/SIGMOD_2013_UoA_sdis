@@ -1,9 +1,10 @@
-#include "distance.h"
+#include "../../include/distance.h"
 #include <stdlib.h>
 #include <math.h>
 #include "string.h"
 
-#define MFUNC(a,b,c) min(min(a,b),c)
+#define MFUNC(a,b,c) fmin(fmin(a,b),c)
+
 
 int editDistance(char* a,char* b)
 {
@@ -34,3 +35,4 @@ int editDistance(char* a,char* b)
     }
     return arr[length_a][length_b];
 }
+
