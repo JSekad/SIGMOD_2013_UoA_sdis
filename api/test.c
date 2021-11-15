@@ -56,6 +56,17 @@ int main() {
     }
 
 
+    word w= "spell";
+
+    entry_list  testResultList = NULL;
+
+    if (Working == lookup_entry_index(&w,&tempTree,2,&testResultList)){
+        printf("Results have come\n");
+    }
+
+
+
+
     if (Working == destroy_entry_index(&tempTree)){
         printf("Delete tree Working fine\n");
     }

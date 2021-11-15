@@ -16,7 +16,7 @@ int find_distance(char**,char**);
 
 void add_node(node**,char*,entry*);
 
-void get_words_sub(entry_list**,node**,char*,int);
+void get_words_sub(Entry_list**,node**,char*,int);
 
 entry_list* get_words(node**,char *,int);
 

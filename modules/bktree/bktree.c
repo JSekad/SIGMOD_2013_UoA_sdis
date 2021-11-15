@@ -49,7 +49,7 @@ void add_node(node** tree,char* word,entry* ent)
     return;
 }
 
-void get_words_sub(entry_list** res,node** tree,char* word,int n)//uses recursion to traverse the tree and find matches for given word
+void get_words_sub(Entry_list** res,node** tree,char* word,int n)//uses recursion to traverse the tree and find matches for given word
 {
     int dis=find_distance(&((*tree)->word),&word);
     int a=dis-n;
@@ -64,19 +64,19 @@ void get_words_sub(entry_list** res,node** tree,char* word,int n)//uses recursio
     }
     else
     {
-        InsertLastEntryList(*res,(*tree)->ent);
+        InsertLastEntryList(*res,(*(*tree)->ent));
         for (int i = 0;(i>a) && (i<b) && (((*tree)->next[i])!=NULL) ; i++)
         {
-            get_words_sub(res,(*tree)->next[i],word,n);
+            get_words_sub(res,(&(*tree)->next[i]),word,n);
         }
         
     }
 }
 
 entry_list* get_words(node** tree, char* word,int n)//outside function of get_word_sub stores the entry_list result
-{
-    entry_list* res=CreateEntryList();
-    get_words_sub(&res,tree,word,n);
+{   entry_list* res;
+    *res=CreateEntryList();
+    get_words_sub(res,tree,word,n);
     return res;
 }
 

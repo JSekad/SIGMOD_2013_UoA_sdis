@@ -79,12 +79,17 @@ enum error_code build_entry_index(const entry_list* el,  MatchType type, inDex *
     *ix=tempTree;
     return Working;
 };
-//
-//enum error_code lookup_entry_index(const word* w, index* ix, int threshold, entry_list* result);
-//
+
+enum error_code lookup_entry_index(const word* w, inDex* ix, int threshold, entry_list* result){
+    Entry_list **tempEntEl = result;
+    get_words_sub(tempEntEl,ix,*w,threshold);
+    PrintEntryList(*result);
+    return Working;
+};
+
 enum error_code destroy_entry_index(inDex * ix){
     delete_tree(ix);
-    if (ix == NULL) {
+    if (*ix == NULL) {
         return Working;
     }else{
         return Failed;
