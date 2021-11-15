@@ -73,7 +73,6 @@ enum error_code build_entry_index(const entry_list* el,  MatchType type, inDex *
         return Failed;
     while(testIterator!=NULL) {
         add_node(&tempTree,(*testIterator)->w,testIterator);
-        printf("%s\n", (*testIterator)->w);
         testIterator = getNextEntryOfList(*el);
     }
     *ix=tempTree;
@@ -81,10 +80,14 @@ enum error_code build_entry_index(const entry_list* el,  MatchType type, inDex *
 };
 
 enum error_code lookup_entry_index(const word* w, inDex* ix, int threshold, entry_list* result){
-    Entry_list **tempEntEl = result;
-    get_words_sub(tempEntEl,ix,*w,threshold);
-    PrintEntryList(*result);
-    return Working;
+    Entry_list *tempEntEl;
+    get_words(ix,*w,threshold,&tempEntEl);
+    *result=tempEntEl;
+    if(*result!=NULL){
+        return Working;
+    } else{
+        return Failed;
+    }
 };
 
 enum error_code destroy_entry_index(inDex * ix){

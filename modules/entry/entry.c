@@ -40,9 +40,3 @@ void DestroyEntry(ent **e) {
     (*e)=NULL;
 }
 
-
-ent *InsertNextEntry(ent *previous, ent *next) {
-    previous->next = (struct NodeTag *) next;
-    next->prev = (struct NodeTag *) previous;
-
-}

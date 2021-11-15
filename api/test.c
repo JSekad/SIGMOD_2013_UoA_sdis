@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include "../include/api.h"
 
-#define TESTRECORDSNUMBER 10
+#define TESTRECORDSNUMBER 7
 
 int main() {
 
     //Creating entries and lisofentries
 
-    char words[TESTRECORDSNUMBER][31] = {"mell","felt","hall","small","tall","sol","smell","play","sail","ork"};
+    char words[TESTRECORDSNUMBER][31] = {"hell","help","fall","felt","fell","small","melt"};
 
 
     entry_list  testel = NULL;
@@ -56,7 +56,7 @@ int main() {
     }
 
 
-    word w= "spell";
+    word w= "henn";
 
     entry_list  testResultList = NULL;
 
@@ -64,11 +64,15 @@ int main() {
         printf("Results have come\n");
     }
 
-
+    PrintEntryList(testResultList);
 
 
     if (Working == destroy_entry_index(&tempTree)){
         printf("Delete tree Working fine\n");
+    }
+
+    if (Working == destroy_entry_list(&testResultList)) {
+        printf("Delete Working fine\n");
     }
 
     printf("\nall done well\n"

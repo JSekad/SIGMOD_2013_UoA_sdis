@@ -6,7 +6,7 @@ typedef node* inDex;
 struct treenode
 {
     char* word;
-    entry* ent;
+    ent* ent;
     node* next[LEN];
 };
 
@@ -18,7 +18,7 @@ void add_node(node**,char*,entry*);
 
 void get_words_sub(Entry_list**,node**,char*,int);
 
-entry_list* get_words(node**,char *,int);
+void get_words(node** tree, char* word,int n,Entry_list** resel);
 
 void delete_tree(node **);
  

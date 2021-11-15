@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include "../include/api.h"
 #include "../include/acutest.h"
-#define TESTRECORDSNUMBER 10
+#define TESTRECORDSNUMBER 7
 
 
 void test_create_entry(void) {
 
-    word w[TESTRECORDSNUMBER] = {"mell","felt00000000","hall","small","tall","sol","smell","play","sail","asasda"};
+    word w[TESTRECORDSNUMBER] ={"hell","help","fall","felt","fell","small","melt"};
 
     entry testent;
 
@@ -22,7 +22,7 @@ void test_create_entry(void) {
 
 void test_destroy_entry(void) {
 
-    word w[TESTRECORDSNUMBER] = {"mell","felt","hall","small","tall","sol","smelaaaaaaaaaaaal","play","sail","play"};
+    word w[TESTRECORDSNUMBER] = {"hell","help","fall","felt","fell","small","melt"};
     entry testent;
 
  for (int i = 0; i < TESTRECORDSNUMBER;i++){
@@ -51,7 +51,7 @@ void test_destroy_entry(void) {
 
  void test_add_entry(void){
      
-     word w[TESTRECORDSNUMBER][31] = {"mell","felt","hall","small","tall","sol","smelaaaaaaaaaaaal","play","sail","play"};
+     word w[TESTRECORDSNUMBER][31] = {"hell","help","fall","felt","fell","small","melt"};
      entry testent;
      entry_list l;
 
@@ -67,7 +67,7 @@ void test_destroy_entry(void) {
  void test_destroy_entry_list(){
 
 
-    word w[TESTRECORDSNUMBER] = {"mell","felt","hall","small","tall","sol","smelaaaaaaaaaaaal","play","sail","play"};
+    word w[TESTRECORDSNUMBER] = {"hell","help","fall","felt","fell","small","melt"};
     entry testent;
     entry_list l;
     TEST_CHECK(create_entry_list(&l)== Working);
@@ -92,7 +92,7 @@ void test_destroy_entry(void) {
 
       //Creating entries and lisofentries
 
-    char words[TESTRECORDSNUMBER][31] = {"mell","felt","hall","small","tall","sol","smell","play","sail","ork"};
+    char words[TESTRECORDSNUMBER][31] = {"hell","help","fall","felt","fell","small","melt"};
 
 
     entry_list  testel = NULL;
@@ -119,7 +119,6 @@ void test_destroy_entry(void) {
 
     testIterator=get_first(&testel);
     while(testIterator!=NULL) {
-        printf("%s\n", (*testIterator)->w);
         testIterator = get_next(&testel);
     }
 
@@ -133,6 +132,60 @@ void test_destroy_entry(void) {
 
  }
 
+
+void  test_look_up_entry_index(){
+
+    //Creating entries and lisofentries
+
+    char words[TESTRECORDSNUMBER][31] = {"hell","help","fall","felt","fell","small","melt"};
+
+
+    entry_list  testel = NULL;
+//
+    TEST_CHECK(Working == create_entry_list(&testel));
+
+
+    entry testent;
+
+    for (int i=0; i<TESTRECORDSNUMBER; i++) {
+        TEST_CHECK(Working == create_entry(words[i], &testent));
+        TEST_CHECK((Working == add_entry(&testel,&testent)));
+
+        TEST_CHECK(Working == destroy_entry(&testent));
+        TEST_CHECK(testent==NULL);
+
+    }
+
+    // printf("Number of Entries %d\n", get_number_entries(&testel));
+
+
+    entry * testIterator;
+
+    testIterator=get_first(&testel);
+    while(testIterator!=NULL) {
+        testIterator = get_next(&testel);
+    }
+
+    node * tempTree = NULL;
+    TEST_CHECK(build_entry_index(&testel,MT_EDIT_DIST,&tempTree)== Working);
+
+
+    TEST_CHECK (Working == destroy_entry_list(&testel));
+
+    word w= "henn";
+
+    entry_list  testResultList = NULL;
+
+    TEST_CHECK (Working == lookup_entry_index(&w,&tempTree,2,&testResultList));
+
+
+
+    TEST_CHECK (Working == destroy_entry_index(&tempTree));
+
+    TEST_CHECK (Working == destroy_entry_list(&testResultList));
+
+}
+
 // Λίστα με όλα τα tests προς εκτέλεση
 
 
@@ -143,5 +196,6 @@ void test_destroy_entry(void) {
     {"destroy_entry_list", test_destroy_entry_list},
     { "add_entry", test_add_entry },
     { "build_entry_index", test_build_entry_index },
+    { "look_up_entry_index", test_look_up_entry_index},
 	{ NULL, NULL } // τερματίζουμε τη λίστα με NULL
  };

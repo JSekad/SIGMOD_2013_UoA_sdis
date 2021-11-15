@@ -17,7 +17,7 @@ node* create_node(char* word,entry* ent)//if tree is empty creates the root of t
     {
         tree->next[i]=NULL;
     }
-    tree->ent=ent;
+    tree->ent = CreateEntry((*ent)->w,(*ent)->payload);
     return tree;
 }
 
@@ -64,20 +64,19 @@ void get_words_sub(Entry_list** res,node** tree,char* word,int n)//uses recursio
     }
     else
     {
-        InsertLastEntryList(*res,(*(*tree)->ent));
-        for (int i = 0;(i>a) && (i<b) && (((*tree)->next[i])!=NULL) ; i++)
+        InsertLastEntryList(*res,(*tree)->ent);
+        for (int i = 0;(i>=a) && (i<=b) ; i++)
         {
-            get_words_sub(res,(&(*tree)->next[i]),word,n);
+            if(((*tree)->next[i])!=NULL) {
+                get_words_sub(res, (&(*tree)->next[i]), word, n);
+            }
         }
-        
+
     }
 }
-
-entry_list* get_words(node** tree, char* word,int n)//outside function of get_word_sub stores the entry_list result
-{   entry_list* res;
-    *res=CreateEntryList();
-    get_words_sub(res,tree,word,n);
-    return res;
+void get_words(node** tree, char* word,int n,Entry_list** resel)//outside function of get_word_sub stores the entry_list result
+{   *resel=CreateEntryList();
+    get_words_sub(resel,tree,word,n);
 }
 
 void delete_tree(node **tree)
@@ -101,7 +100,7 @@ void delete_tree(node **tree)
         }
     }
     free((*tree)->word);
-    (*tree)->ent=NULL;
+    DestroyEntry(&(*tree)->ent);
     free(*tree);
     *tree=NULL;
 }

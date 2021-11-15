@@ -1,12 +1,24 @@
-# softDevForInfSystems1
+# softDevForInfSystems1 (DELIVERABLE 1 FINAL) 
+
 This is the first Deliverable for "Software Development For Information Systems"
 Developers:
 
-sdi1600148 Tsolkas Nikolaos
+**sdi1600148 Tsolkas Nikolaos**
 
-sdi1800241 Agoris Konstantinos
+**sdi1800241 Agoris Konstantinos**
 
-sdi1800250 Sekadakis Ioannis
+**sdi1800250 Sekadakis Ioannis**
+
+**ENTRY**
+
+Η entry αποτελεί typedef * της δομής ent και περιέχει ενα word (typeder char *) ενα Payload *, και δυο δείκτες σε δομές
+που βρίσκονται μπροστά και πίσω απο την δομή.
+
+
+**ENTRY LIST**
+
+Η entry_list αποτελεί δείκτη σε δομή Entry_List και αποτελείται απο ένα counter που μετράει τα entries της λίστας.
+Επίσης, περιέχει και τρεις pointer current(τρέχων entry απο την προσπέλαση μέσω της getNext()),first,last.
 
 **BKTREE**
 

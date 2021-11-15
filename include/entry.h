@@ -17,10 +17,6 @@ ent *CreateEntry(char *, Payload);
 
 void DestroyEntry(ent **);
 
-void InsertWord(const char *);
-
-ent *InsertNextEntry(ent *previous, ent *next);
-
 
 
 

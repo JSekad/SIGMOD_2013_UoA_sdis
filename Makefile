@@ -2,7 +2,7 @@ objects=entry.o entry_list.o distance.o bktree.o api.o testAcu.o
 
 main: $(objects)
 	gcc $(objects) -o Api -lm
-	valgrind --leak-check=full --leak-resolution=med --track-origins=yes --trace-children=yes -s ./Api
+	./Api
 	rm $(objects)
 
 entry.o: modules/entry/entry.c
