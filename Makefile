@@ -1,4 +1,4 @@
-objects=entry.o entry_list.o distance.o bktree.o api.o test.o
+objects=entry.o entry_list.o distance.o bktree.o api.o testAcu.o
 
 main: $(objects)
 	gcc $(objects) -o Api -lm
@@ -19,8 +19,8 @@ bktree.o: modules/bktree/bktree.c
 api.o: api/api.c
 	gcc -c api/api.c
 
-test.o: api/test.c
-	gcc -c api/test.c
+testAcu.o: api/testAcu.c
+	gcc -c api/testAcu.c
 
 clean:
 	rm Api $(objects)
