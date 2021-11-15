@@ -145,6 +145,65 @@ void test_destroy_entry(void) {
 
 
 
+
+
+
+ void  test_build_entry_index(){
+
+      //Creating entries and lisofentries
+
+    char words[TESTRECORDSNUMBER][31] = {"mell","felt","hall","small","tall","sol","smell","play","sail","ork"};
+
+
+    entry_list  testel = NULL;
+//
+    TEST_CHECK(Working == create_entry_list(&testel)); 
+    
+
+    entry testent;
+
+    for (int i=0; i<TESTRECORDSNUMBER; i++) {
+        TEST_CHECK(Working == create_entry(words[i], &testent));
+        TEST_CHECK((Working == add_entry(&testel,&testent)));
+        
+        TEST_CHECK(Working == destroy_entry(&testent));
+        TEST_CHECK(testent==NULL);
+                
+        
+    }
+
+   // printf("Number of Entries %d\n", get_number_entries(&testel));
+
+
+    entry * testIterator;
+
+    testIterator=get_first(&testel);
+    while(testIterator!=NULL) {
+        printf("%s\n", (*testIterator)->w);
+        testIterator = get_next(&testel);
+    }
+
+    node * tempTree = NULL;
+    TEST_CHECK(build_entry_index(&testel,MT_EDIT_DIST,&tempTree)== Working);
+
+
+
+    //UNTIL HERE THERE IS A LIST OF ENTRIES
+
+    TEST_CHECK(Working == destroy_entry_list(&testel));
+   
+
+    TEST_CHECK(Working == destroy_entry_index(&tempTree));
+     
+
+    
+
+
+
+ }
+
+
+
 // Λίστα με όλα τα tests προς εκτέλεση
 
 
@@ -154,5 +213,6 @@ void test_destroy_entry(void) {
     { "create_entry_list", test_create_entry },
     {"destroy_entry_list", test_destroy_entry_list},
     { "add_entry", test_add_entry },
+    { "build_entry_index", test_build_entry_index },
 	{ NULL, NULL } // τερματίζουμε τη λίστα με NULL
  };
