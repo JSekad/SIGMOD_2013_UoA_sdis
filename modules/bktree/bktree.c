@@ -23,55 +23,62 @@ node* create_node(char* word,entry* ent)//if tree is empty creates the root of t
 
 int find_distance(char** word1,char** word2)//finds the edit distance between two words
 {
-    printf("\nin find");
     int a=editDistance(*word1,*word2);
-    printf("\nedit distane is %d\n",a);
     return a;
 }
 
 void add_node(node** tree,char* word,entry* ent)
 {
-    printf("\n before find %s ",word);
     int a=strlen(word);
-    printf("\n strlen of %s is %d\n",word,a);
     if((*tree) == NULL)
     {
-        printf("\ncreate tree\n");
         *tree=create_node(word,ent);//if tree is empty creates root
-        printf("\ncreate tree with word %s\n",(*tree)->word);
     }
     else
     {
         int b=find_distance(&((*tree)->word),&word);
         if((*tree)->next[b]!=NULL)
         {
-            printf("\nanother word exists with same edit distance\n");
             add_node(&((*tree)->next[b]),word,ent);//checks if current node child is occupied and if it is traverses onto that childs subtree
         }
         else
         {
-            printf("\nfound a spot for word\n");
             (*tree)->next[b]=create_node(word,ent);
         }
     }
     return;
 }
 
-//entry_list* get_words(node** tree, char* word,int n)
-//{
-//    char* posmatch[30];
-//    entry_list *res=CreateEntryList();
-//    posmatch[1]=(*tree)->word;
-//    int dis=find_distance(posmatch[1],word);
-//    if(dis <= n)
-//    {
-//        InsertLastEntryList(res,(*tree)->ent);
-//    }
-//    else
-//    {
-//        return;
-//    }
-//}
+void get_words_sub(entry_list** res,node** tree,char* word,int n)//uses recursion to traverse the tree and find matches for given word
+{
+    int dis=find_distance(&((*tree)->word),&word);
+    int a=dis-n;
+    if(a<0)
+    {
+        a=0;
+    }
+    int b=dis+n;
+    if(dis>n)
+    {
+        return;
+    }
+    else
+    {
+        InsertLastEntryList(*res,(*tree)->ent);
+        for (int i = 0;(i>a) && (i<b) && (((*tree)->next[i])!=NULL) ; i++)
+        {
+            get_words_sub(res,(*tree)->next[i],word,n);
+        }
+        
+    }
+}
+
+entry_list* get_words(node** tree, char* word,int n)//outside function of get_word_sub stores the entry_list result
+{
+    entry_list* res=CreateEntryList();
+    get_words_sub(&res,tree,word,n);
+    return res;
+}
 
 void delete_tree(node **tree)
 {
@@ -93,7 +100,6 @@ void delete_tree(node **tree)
             }
         }
     }
-    printf("deleting %s\n",(*tree)->word);
     free((*tree)->word);
     (*tree)->ent=NULL;
     free(*tree);
