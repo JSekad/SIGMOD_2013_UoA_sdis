@@ -1,3 +1,8 @@
+#ifndef ENTRY_LIST
+#define ENTRY_LIST
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "entry.h"
 
 typedef struct Nodee{
@@ -20,6 +25,10 @@ entry * getFirstEntryOfList(Entry_list*);
 
 entry * getNextEntryOfList(Entry_list*);
 
+
+ent* searchEntryList(Entry_list*,word);
+
 void PrintEntryList(Entry_list *);
 
+#endif
 

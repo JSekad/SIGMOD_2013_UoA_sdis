@@ -1,5 +1,11 @@
+#ifndef ENTRY
+#define ENTRY
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "payload.h"
 
-typedef void *Payload;
+
 typedef char *word;
 
 
@@ -13,11 +19,14 @@ typedef struct NodeTag {
 typedef ent *entry;
 
 
+
+//AN TO ENTRY THELEIS NA TO KRATHSEIS KAI GIA DOCUMENT APLA PERNAS NULL STO PAYLOAD
 ent *CreateEntry(char *, Payload);
 
 void DestroyEntry(ent **);
 
 
+#endif
 
 
 
