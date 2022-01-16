@@ -189,6 +189,21 @@ Entry_list * MatchDocumentHashTable(hashTable *h,Entry_list *l){
     return reslist;
 }
 
+//void MatchDocumentHashTable2(hashTable *h,Entry_list *l,vector** vect){
+//    vector * v = *vect;
+//
+//    entry *e=getFirstEntryOfList(l);
+//    while  (e!=NULL){
+//        entry *cure=Exists(h,(*e)->w);
+//        if (cure!=NULL){
+//
+//
+//        }
+//        e=getNextEntryOfList(l);
+//    }
+//    return reslist;
+//}
+
 
 
 

@@ -14,6 +14,32 @@ typedef struct Nodee{
 
 typedef Entry_list * entry_list;
 
+typedef struct Noderec {
+    unsigned int id;
+    struct Noderec *next;
+} rec;
+
+typedef rec * record;
+
+typedef struct NodeSortList{
+    unsigned int total;
+    record first;
+    record last;
+} Sort_list;
+
+typedef Sort_list * sort_list;
+
+rec *CreateRecord(unsigned int);
+
+void DestroyRecord(rec **);
+
+Sort_list *CreateSortList();
+
+void DestroySortList(Sort_list **L);
+
+void InsertSortedInList(Sort_list *L,unsigned int id);
+
+void InsertNonsortedInList(Sort_list *L,unsigned int id);
 
 Entry_list *CreateEntryList();
 

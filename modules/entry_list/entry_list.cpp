@@ -3,6 +3,107 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+rec *CreateRecord(unsigned int id) {
+
+    rec *new_entry = (rec *) malloc(sizeof(rec));
+    new_entry->next = NULL;
+    new_entry->id=id;
+
+
+    return new_entry;
+
+}
+
+void DestroyRecord(rec **e) {
+    //free(e->payload);
+    free((*e));
+    (*e)=NULL;
+}
+
+
+Sort_list *CreateSortList() {
+    Sort_list * New = NULL;
+    New= (Sort_list *) malloc(sizeof(Sort_list));
+    New->first = NULL;
+    New->last = NULL;
+    New->total = 0;
+    return New;
+}
+
+
+void DestroySortList(Sort_list **L) {
+
+    if ((*L)->total > 0) {
+
+        rec *current = (rec *) (*L)->first;
+
+        while (current->next) {
+            rec *next = (rec *) current->next;
+            DestroyRecord(&current);
+            current = next;
+        }
+
+        DestroyRecord(&current);
+    }
+
+    free(*L);
+    *L=NULL;
+}
+
+
+void InsertSortedInList(Sort_list *L,unsigned int id) {
+    //printf("InsertLastEntryList\n");
+    //PrintPayload(&(e->payload));
+    rec *m = CreateRecord(id);
+
+    /* Special case for the head end */
+    if (L->first == NULL
+        || L->first->id
+           > m->id) {
+        m->next = L->first;
+        L->first = m;
+        L->total++;
+    }
+    else {
+        rec * current = L->first;
+        while (current->next != NULL
+               && current->next->id < m->id) {
+            current = current->next;
+        }
+        m->next = current->next;
+        current->next = m;
+        L->total++;
+
+    }
+}
+
+void InsertNonsortedInList(Sort_list *L,unsigned int id) {
+    //printf("InsertLastEntryList\n");
+    //PrintPayload(&(e->payload));
+    rec *m = CreateRecord(id);
+
+    if (L->total > 0) {
+        L->last->next = m;
+        L->last = m;
+        m->next = NULL;
+        L->total++;
+        return;
+    }
+
+    if (L->total == 0) {
+
+        L->last = m;
+        L->first = m;
+        m->next = NULL;
+        L->total++;
+        return;
+    }
+
+}
+
+
+
 Entry_list *CreateEntryList() {
     Entry_list* New = NULL;
     New= (Entry_list *) malloc(sizeof(Entry_list));

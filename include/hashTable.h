@@ -7,6 +7,8 @@
 #include "entry_list.h"
 #include "core.h"
 #include <stdbool.h>
+#include "vector.h"
+#include "query.h"
 
 #define SIZEOFHASH ((((MAX_DOC_LENGTH/4)-(MAX_DOC_LENGTH/31))*8)/10)
 

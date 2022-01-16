@@ -176,6 +176,7 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
     char* tempWord = (char*)malloc(sizeof (char)*(strlen(doc_str)+1));
     strcpy(tempWord,doc_str);
     doc* d = initializedoc(doc_id,tempWord);
+    sort_list sl=NULL;
 
     //LIST OF ENTRIES OFF DOCUMENT CHECK IN HASHTABLE
 
@@ -226,6 +227,8 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
 
     //FIND THE RESULTS OF DOCUMENT AND PARSE IT IN THE STRUCT
 
+    sl=CreateSortList();
+
     if(ResultList->numOfNodes>0) {
         e = getFirstEntryOfList(ResultList);
         while (e != NULL) {
@@ -243,16 +246,31 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
                     && q->matchTypeId == (*e)->payload->matchtype) {
                     r = (result *) vectorGet(results, tempid->idnumber-1);
 
-                    int wordcount=0;
-                    ent* temp = q->words->first;
-                    while(temp!=NULL){
-                        if(!strcmp(temp->w,(*e)->w)){
-                            r->words[wordcount]=1;
-                        }
-                        temp=temp->next;
-                        wordcount++;
+
+                    int ccounter0=0;
+                    for(int j=0;j<r->numOfWods;j++){
+                        ccounter0=ccounter0+r->words[j];
                     }
-                    vectorSet(results, tempid->idnumber - 1, r);
+                    if(ccounter0!=r->numOfWods) {
+                        InsertNonsortedInList(sl,(unsigned int) tempid->idnumber);
+                        int wordcount = 0;
+                        ent *temp = q->words->first;
+                        while (temp != NULL) {
+                            if (!strcmp(temp->w, (*e)->w)) {
+                                r->words[wordcount] = 1;
+                            }
+                            temp = temp->next;
+                            wordcount++;
+                        }
+                        int ccounter = 0;
+                        for (int j = 0; j < r->numOfWods; j++) {
+                            ccounter = ccounter + r->words[j];
+                        }
+                        if (ccounter == r->numOfWods) {
+                            InsertSortedInList(d->qIdResults,(unsigned int) tempid->idnumber);
+                        }
+                        vectorSet(results, tempid->idnumber - 1, r);
+                    }
                 }
                 tempid=getNextIdOfPayload((*e)->payload);        
             }
@@ -260,33 +278,22 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
         }
 
 
-        for (int i = 0; i < vectorTotal(results); i++) {
-            r = (result *) vectorGet(results, i);
-            int ccounter=0;
-            for(int j=0;j<r->numOfWods;j++){
-                ccounter=ccounter+r->words[j];
-            }
-            if(ccounter==r->numOfWods) {
-                unsigned int *integ = (unsigned int *) malloc(sizeof(unsigned int));
-                *integ = (unsigned int) i + 1;
-//                printf("%u\t", *integ);
-                vectorPushBack(d->qIdResults, integ);
-            }
-        }
         vectorPushBack(documents,d);
-        //PUSH DOCUMENT IN VECTOR DOCUMENTS
 
-        for (int i = 0; i < vectorTotal(results); i++) {
-            r = (result *) vectorGet(results, i);
-            q = (query *) vectorGet(queries, i);
+        rec* temprec =sl->first;
+        while (temprec != NULL) {
+            r = (result *) vectorGet(results, temprec->id-1);
             for(int j=0;j<r->numOfWods;j++){
                 r->words[j]=0;
             }
-            vectorSet(results, i, r);
+            vectorSet(results, temprec->id - 1, r);
+
+            temprec=temprec->next;
         }
-        //REINITIALIZE RESULTS VECTOR
+
+        DestroySortList(&sl);
     }else{
-        vectorPushBack(d->qIdResults, NULL);
+//        vectorPushBack(d->qIdResults, NULL);
         free(tempWord);
         return EC_FAIL;
     }
@@ -296,19 +303,23 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 ErrorCode GetNextAvailRes(DocID* p_doc_id, unsigned int* p_num_res, QueryID** p_query_ids)
 {
     unsigned int* temp=NULL;
+    unsigned int temp2;
     doc* d = (doc*)vectorGet(documents,currentDoc);
     *p_doc_id= (unsigned int)d->docid;
 
     *p_num_res=(unsigned int)d->qIdResults->total;
     temp=(unsigned int*)malloc(sizeof(unsigned int)*(d->qIdResults->total));
-    for (int i=0;i<d->qIdResults->total;i++){
-        temp[i]=*((unsigned int*)vectorGet(d->qIdResults,i));
+    int i = 0;
+    rec* temprec = d->qIdResults->first;
+    while(temprec!=NULL){
+        temp[i]=temprec->id;
+        temprec=temprec->next;
+        i++;
     }
     *p_query_ids=temp;
     currentDoc++;
