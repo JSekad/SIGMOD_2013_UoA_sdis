@@ -9,8 +9,9 @@
 #include "../../../include/bktree.h"
 #include "../../../include/distance.h"
 #include "../../../include/hashTable.h"
+#include "../../../include/scheduler.h"
 #include <unistd.h>
-
+#include <pthread.h>
 
 vector *queries;
 vector *documents;
@@ -20,6 +21,11 @@ vector* bkTreesForHamming;
 vector* results;
 int currentDoc=0;
 
+
+int numofthreads = 2;
+tpool_t *tm1;
+
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 using namespace std;
 
@@ -43,11 +49,19 @@ ErrorCode InitializeIndex(){
     }
     results=(vector*)malloc(sizeof(vector));
     vector_init(results,STARTING_VERTORS_CAPACITY);
+
+
+    tm1  = tpool_create(numofthreads);
+    printf ("SUCCESS");
     return EC_SUCCESS;
 }
 
 
 ErrorCode DestroyIndex(){
+
+    tpool_wait(tm1);
+    tpool_destroy(tm1);
+
     for(int i=0;i<queries->total;i++){
         destroyQuery((query*)queries->items[i]);
     }
@@ -75,6 +89,7 @@ ErrorCode DestroyIndex(){
 ErrorCode StartQuery(QueryID query_id, const char* query_str, MatchType match_type, unsigned int match_dist)
 {
     //printf("%s %d\n",query_str,match_type);
+
 
     query *q;
     result *r;
@@ -166,8 +181,61 @@ ErrorCode EndQuery(QueryID query_id)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
+void *tpool_worker(void *arg)
 {
+    tpool_t      *tm = (tpool_t*)arg;
+    tpool_work_t *work;
+
+    while (1) {
+        pthread_mutex_lock(&(tm->work_mutex));
+
+        while (tm->work_first == NULL && !tm->stop)
+            pthread_cond_wait(&(tm->work_cond), &(tm->work_mutex));
+
+        if (tm->stop)
+            break;
+
+        work = tpool_work_get(tm);
+        tm->working_cnt++;
+        pthread_mutex_unlock(&(tm->work_mutex));
+
+        if (work != NULL) {
+            work->func(work->arg);
+            tpool_work_destroy(work);
+        }
+
+        pthread_mutex_lock(&(tm->work_mutex));
+        tm->working_cnt--;
+        if (!tm->stop && tm->working_cnt == 0 && tm->work_first == NULL)
+            pthread_cond_signal(&(tm->working_cond));
+        pthread_mutex_unlock(&(tm->work_mutex));
+    }
+
+    tm->thread_cnt--;
+    pthread_cond_signal(&(tm->working_cond));
+    pthread_mutex_unlock(&(tm->work_mutex));
+    return NULL;
+}
+
+
+ErrorCode MatchDocument(DocID doc_id, const char* doc_str) {
+
+    pt_args args = (pt_args)malloc(sizeof(args_t));
+    args->idarg=doc_id;
+    args->docarg = (char *) malloc(sizeof(char) * (strlen(doc_str) + 1));
+    strcpy(args->docarg, doc_str);
+    tpool_add_work(tm1, worker, args);
+    return EC_SUCCESS;
+}
+
+void worker(void *arg)
+{
+
+    pthread_mutex_lock(&mutex);
+    pt_args ptra=(pt_args)arg;
+    DocID doc_id = ptra->idarg;
+    char* doc_str = ptra->docarg;
+
     ids * tempid=NULL;
     query* q=NULL;
     result* r=NULL;
@@ -175,8 +243,11 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
     Entry_list * ResultList=NULL;
     char* tempWord = (char*)malloc(sizeof (char)*(strlen(doc_str)+1));
     strcpy(tempWord,doc_str);
+
     doc* d = initializedoc(doc_id,tempWord);
     sort_list sl=NULL;
+
+
 
     //LIST OF ENTRIES OFF DOCUMENT CHECK IN HASHTABLE
 
@@ -223,6 +294,7 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
         e=getNextEntryOfList(d->list_of_words);
     }
     
+    //MUTEX
 
 
     //FIND THE RESULTS OF DOCUMENT AND PARSE IT IN THE STRUCT
@@ -295,11 +367,15 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
     }else{
 //        vectorPushBack(d->qIdResults, NULL);
         free(tempWord);
-        return EC_FAIL;
+        //MUTEX
+        pthread_mutex_unlock(&mutex);
+        return;
     }
     DestroyEntryList(&ResultList);
     free(tempWord);
-    return EC_SUCCESS;
+    //MUTEX
+    pthread_mutex_unlock(&mutex);
+    return;
 }
 
 
@@ -308,8 +384,10 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
 ErrorCode GetNextAvailRes(DocID* p_doc_id, unsigned int* p_num_res, QueryID** p_query_ids)
 {
     unsigned int* temp=NULL;
-    unsigned int temp2;
-    doc* d = (doc*)vectorGet(documents,currentDoc);
+    doc* d = NULL;
+    do {
+        d = (doc *) vectorGet(documents, currentDoc);
+    }while(d==NULL);
     *p_doc_id= (unsigned int)d->docid;
 
     *p_num_res=(unsigned int)d->qIdResults->total;

@@ -197,9 +197,10 @@ ent *searchEntryList(Entry_list *L, word w) {
     ent *N = (ent *) L->first;
     while (N->next != NULL) {
         N = N->next;
-        if (!strcmp(N->w, w))
-            L->current=N->prev->next;
+        if (!strcmp(N->w, w)) {
+            L->current = N->prev->next;
             return N;
+        }
     }
     if (!strcmp(N->w, w)) return N;
     return NULL;

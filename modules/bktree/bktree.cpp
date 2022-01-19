@@ -7,8 +7,7 @@ node* create_node(char* word,entry* ent)//if tree is empty creates the root of t
     int a=strlen(word);
     tree->word=(char*)malloc(sizeof(char) * (++a));
     strcpy(tree->word,word);
-    for(int i=0;i<=LEN;i++)
-    {
+    for(int i=0;i<=LEN;i++){
         tree->next[i]=NULL;
     }
     tree->entp = CreateEntry((*ent)->w,(*ent)->payload);

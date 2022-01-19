@@ -27,7 +27,7 @@
 # Current version: 1.0 (initial release)
 	
 TEST_NEW_O=test_driver/test_through.o
-IMPL_O=ref_impl/core.o   ../../modules/entry/entry.o ../../modules/vector/vector.o ../../modules/doc/doc.o ../../modules/hash_table/hashTable.o ../../modules/entry_list/entry_list.o ../../modules/query/query.o ../../modules/payload/payload.o ../../modules/bktree/distance.o ../../modules/bktree/bktree.o
+IMPL_O=ref_impl/core.o   ../../modules/entry/entry.o ../../modules/vector/vector.o ../../modules/doc/doc.o ../../modules/hash_table/hashTable.o ../../modules/entry_list/entry_list.o ../../modules/query/query.o ../../modules/payload/payload.o ../../modules/bktree/distance.o ../../modules/bktree/bktree.o ../../modules/scheduler/scheduler.o
   
 
 CC  = gcc
@@ -43,7 +43,7 @@ LIBRARY=core
 all: $(PROGRAMS)
 
 lib: $(IMPL_O)
-	$(CXX) $(CXXFLAGS) -shared -o lib$(LIBRARY).so $(IMPL_O)
+	$(CXX) $(CXXFLAGS) -shared -o lib$(LIBRARY).so $(IMPL_O) $(LDFLAGS)
 	
 new-testdriver: clean lib $(TEST_NEW_O)
 	$(CXX) $(CXXFLAGS) -o testdriver $(TEST_NEW_O) ./lib$(LIBRARY).so
