@@ -1,13 +1,23 @@
-#ifndef __TPOOL_H__
-#define __TPOOL_H__
-#include <cstdlib>
+#ifndef SCHEDULER
+#define SCHEDULER
+
 #include <stdbool.h>
 #include <stddef.h>
-#include <unistd.h>
 #include <pthread.h>
-#include "../sigmod_run/final-testdriver/include/core.h"
+
+
+struct tpool;
+typedef struct tpool tpool_t;
 
 typedef void (*thread_func_t)(void *arg);
+
+tpool_t *tpool_create(size_t num);
+void tpool_destroy(tpool_t *tm);
+
+bool tpool_add_work(tpool_t *tm, thread_func_t func, void *arg);
+void tpool_wait(tpool_t *tm);
+
+
 
 struct tpool_work {
     thread_func_t      func;
@@ -15,16 +25,6 @@ struct tpool_work {
     struct tpool_work *next;
 };
 typedef struct tpool_work tpool_work_t;
-
-
-
-typedef struct args{
-    DocID idarg;
-    char* docarg;
-} args_t;
-
-typedef args_t * pt_args;
-
 
 
 
@@ -41,22 +41,12 @@ struct tpool {
 
 
 
-struct tpool;
-typedef struct tpool tpool_t;
+static tpool_work_t *tpool_work_create(thread_func_t func, void *arg);
+static void tpool_work_destroy(tpool_work_t *work);
 
 
-void worker(void *arg);
+static tpool_work_t *tpool_work_get(tpool_t *tm);
 
+static void *tpool_worker(void *arg);
 
-void *tpool_worker(void *arg);
-
-tpool_work_t *tpool_work_get(tpool_t *tm);
-tpool_work_t *tpool_work_create(thread_func_t func, void *arg);
-void tpool_work_destroy(tpool_work_t *work);
-tpool_t *tpool_create(size_t num);
-void tpool_destroy(tpool_t *tm);
-
-bool tpool_add_work(tpool_t *tm, thread_func_t func, void *arg);
-void tpool_wait(tpool_t *tm);
-
-#endif /* __TPOOL_H__ */
+#endif

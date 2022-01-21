@@ -27,7 +27,7 @@
 # Current version: 1.0 (initial release)
 	
 TEST_NEW_O=test_driver/test_through.o
-IMPL_O=ref_impl/core.o   ../../modules/entry/entry.o ../../modules/vector/vector.o ../../modules/doc/doc.o ../../modules/hash_table/hashTable.o ../../modules/entry_list/entry_list.o ../../modules/query/query.o ../../modules/payload/payload.o ../../modules/bktree/distance.o ../../modules/bktree/bktree.o ../../modules/scheduler/scheduler.o
+IMPL_O=ref_impl/core.o   ../../modules/entry/entry.o  ../../modules/scheduler/scheduler.o ../../modules/vector/vector.o ../../modules/doc/doc.o ../../modules/hash_table/hashTable.o ../../modules/entry_list/entry_list.o ../../modules/query/query.o ../../modules/payload/payload.o ../../modules/bktree/distance.o ../../modules/bktree/bktree.o
   
 
 CC  = gcc
@@ -47,15 +47,15 @@ lib: $(IMPL_O)
 	
 new-testdriver: clean lib $(TEST_NEW_O)
 	$(CXX) $(CXXFLAGS) -o testdriver $(TEST_NEW_O) ./lib$(LIBRARY).so
-	./testdriver test_data/small_test.txt 180 > test.txt
+	./testdriver test_data/small_test.txt 180
 
 
 clean:
-	rm -f testdriver lib$(LIBRARY).so $(IMPL_O) result.txt test.txt
+	rm -f *.out testdriver lib$(LIBRARY).so $(IMPL_O) result.txt test.txt 
 	find . -name '*.o' -print | xargs rm -f
 
 gdb: clean lib $(TEST_NEW_O)
-	$(CXX) $(CXXFLAGS) -o testdriver $(TEST_NEW_O) ./lib$(LIBRARY).so
+	$(CXX) $(CXXFLAGS)  -o testdriver $(TEST_NEW_O) ./lib$(LIBRARY).so
 	gdb ./testdriver test_data/small_test.txt 180
 
 

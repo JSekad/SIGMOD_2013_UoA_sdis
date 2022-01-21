@@ -1,32 +1,34 @@
+
 #include "../../include/scheduler.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 
-tpool_work_t *tpool_work_create(thread_func_t func, void *arg)
+static tpool_work_t *tpool_work_create(thread_func_t func, void *arg)
 {
     tpool_work_t *work;
 
     if (func == NULL)
         return NULL;
 
-    work = (tpool_work_t*)malloc(sizeof(*work));
+    work       = (tpool_work_t*)malloc(sizeof(tpool_work_t));
     work->func = func;
     work->arg  = arg;
     work->next = NULL;
     return work;
 }
 
-void tpool_work_destroy(tpool_work_t *work)
+static void tpool_work_destroy(tpool_work_t *work)
 {
     if (work == NULL)
         return;
-    pt_args ar=(pt_args)work->arg;
-    free(ar->docarg);
     free(work);
 }
 
 
 
-tpool_work_t *tpool_work_get(tpool_t *tm)
+
+static tpool_work_t *tpool_work_get(tpool_t *tm)
 {
     tpool_work_t *work;
 
@@ -47,6 +49,45 @@ tpool_work_t *tpool_work_get(tpool_t *tm)
     return work;
 }
 
+
+static void *tpool_worker(void *arg)
+{
+    tpool_t      *tm =(tpool_t *) arg;
+    tpool_work_t *work;
+
+    while (1) {
+        pthread_mutex_lock(&(tm->work_mutex));
+
+        while (tm->work_first == NULL && !tm->stop)
+            pthread_cond_wait(&(tm->work_cond), &(tm->work_mutex));
+
+        if (tm->stop)
+            break;
+
+        work = tpool_work_get(tm);
+        tm->working_cnt++;
+        pthread_mutex_unlock(&(tm->work_mutex));
+
+        if (work != NULL) {
+            work->func(work->arg);
+            tpool_work_destroy(work);
+        }
+
+        pthread_mutex_lock(&(tm->work_mutex));
+        tm->working_cnt--;
+        if (!tm->stop && tm->working_cnt == 0 && tm->work_first == NULL)
+            pthread_cond_signal(&(tm->working_cond));
+        pthread_mutex_unlock(&(tm->work_mutex));
+    }
+
+    tm->thread_cnt--;
+    pthread_cond_signal(&(tm->working_cond));
+    pthread_mutex_unlock(&(tm->work_mutex));
+    return NULL;
+}
+
+
+
 tpool_t *tpool_create(size_t num)
 {
     tpool_t   *tm;
@@ -56,9 +97,9 @@ tpool_t *tpool_create(size_t num)
     if (num == 0)
         num = 2;
 
-    tm             = (tpool_t*) calloc(1, sizeof(*tm));
+    tm             = (tpool_t*)calloc(1, sizeof(*tm));
     tm->thread_cnt = num;
-
+    tm->working_cnt=0;
     pthread_mutex_init(&(tm->work_mutex), NULL);
     pthread_cond_init(&(tm->work_cond), NULL);
     pthread_cond_init(&(tm->working_cond), NULL);
@@ -73,6 +114,7 @@ tpool_t *tpool_create(size_t num)
 
     return tm;
 }
+
 
 void tpool_destroy(tpool_t *tm)
 {
@@ -102,17 +144,22 @@ void tpool_destroy(tpool_t *tm)
     free(tm);
 }
 
+
+
 bool tpool_add_work(tpool_t *tm, thread_func_t func, void *arg)
-{
+{ // printf("Adding work to scheduler\n");
     tpool_work_t *work;
 
     if (tm == NULL)
         return false;
 
+  //  printf("scheduler not null\n");
     work = tpool_work_create(func, arg);
+    
     if (work == NULL)
         return false;
 
+  //  printf("work has been created\n");
     pthread_mutex_lock(&(tm->work_mutex));
     if (tm->work_first == NULL) {
         tm->work_first = work;
@@ -121,20 +168,20 @@ bool tpool_add_work(tpool_t *tm, thread_func_t func, void *arg)
         tm->work_last->next = work;
         tm->work_last       = work;
     }
-
+    
     pthread_cond_broadcast(&(tm->work_cond));
     pthread_mutex_unlock(&(tm->work_mutex));
-
+ //    printf("returning true\n");
     return true;
 }
 
 void tpool_wait(tpool_t *tm)
-{
+{  //  printf("in tpool waiting for thread \n");
     if (tm == NULL)
         return;
-
     pthread_mutex_lock(&(tm->work_mutex));
     while (1) {
+        printf("COUNTER - %d\n",(int)tm->thread_cnt);
         if ((!tm->stop && tm->working_cnt != 0) || (tm->stop && tm->thread_cnt != 0)) {
             pthread_cond_wait(&(tm->working_cond), &(tm->work_mutex));
         } else {
@@ -142,4 +189,7 @@ void tpool_wait(tpool_t *tm)
         }
     }
     pthread_mutex_unlock(&(tm->work_mutex));
+
+  //  printf("exiting tpool_wait \n");
 }
+

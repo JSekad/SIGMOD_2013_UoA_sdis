@@ -1,5 +1,4 @@
 #include "../../include/doc.h"
-
 doc* initializedoc(int id,char* wordsofdoc)
 {
     int counter=0;
@@ -19,13 +18,13 @@ doc* initializedoc(int id,char* wordsofdoc)
         ent* Entry = CreateEntry(token,NULL);
 
         if(insertEntry(ht,Entry,NOUPDATE))
-        {   
+        {
             InsertLastEntryList(docu->list_of_words,Entry);
             DestroyEntry(&Entry);
             token=strtok(NULL,del);
         }
         else
-        {   
+        {
             //printf("NOT INSERT INTO\n");
             DestroyEntry(&Entry);
             token=strtok(NULL,del);
@@ -33,23 +32,22 @@ doc* initializedoc(int id,char* wordsofdoc)
     }
     free(token);
     docu->numofwords=counter;
-  DestroyHashTable(ht);
-  docu->qIdResults=CreateSortList();
-  return docu;
- }
+    DestroyHashTable(ht);
+    docu->qIdResults=CreateSortList();
+    return docu;
+}
 
 
 
+void DestroyDoc(doc *d){
 
- void DestroyDoc(doc *d){
-     
-     DestroyEntryList(&(d->list_of_words));
+    DestroyEntryList(&(d->list_of_words));
 //     for(int i=0;i<d->qIdResults->total;i++){
 //         free((unsigned int *)d->qIdResults->items[i]);
 //     }
-     DestroySortList(&(d->qIdResults));
-     free(d);     
+    DestroySortList(&(d->qIdResults));
+    free(d);
 //     free(d->qIdResults);
 
 
- }
+}

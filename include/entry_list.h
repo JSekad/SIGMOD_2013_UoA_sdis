@@ -5,14 +5,6 @@
 #include <stdio.h>
 #include "entry.h"
 
-typedef struct Nodee{
-    int numOfNodes;
-    entry current;
-    entry first;                                             /*hide dummy*/
-    entry last;
-} Entry_list;
-
-typedef Entry_list * entry_list;
 
 typedef struct Noderec {
     unsigned int id;
@@ -41,6 +33,16 @@ void InsertSortedInList(Sort_list *L,unsigned int id);
 
 void InsertNonsortedInList(Sort_list *L,unsigned int id);
 
+typedef struct Nodee{
+    int numOfNodes;
+    entry current;
+    entry first;                                             /*hide dummy*/
+    entry last;
+} Entry_list;
+
+typedef Entry_list * entry_list;
+
+
 Entry_list *CreateEntryList();
 
 void InsertLastEntryList(Entry_list *, ent *);
@@ -50,6 +52,9 @@ void DestroyEntryList(Entry_list **);
 entry * getFirstEntryOfList(Entry_list*);
 
 entry * getNextEntryOfList(Entry_list*);
+
+void appendList(Entry_list **,Entry_list **);
+
 
 
 ent* searchEntryList(Entry_list*,word);

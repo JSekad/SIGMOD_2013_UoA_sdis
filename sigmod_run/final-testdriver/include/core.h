@@ -191,10 +191,6 @@ ErrorCode EndQuery(QueryID query_id);
 *   - \ref EC_SUCCESS
 *          if the document was added successfully
 */
-
-ErrorCode MatchDocumentExec(DocID         doc_id,
-                        const char*   doc_str);
-
 ErrorCode MatchDocument(DocID         doc_id,
                         const char*   doc_str);
 

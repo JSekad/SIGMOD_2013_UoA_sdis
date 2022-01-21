@@ -107,7 +107,7 @@ void TestSigmod(const char* test_file_str, int time_limit_seconds, FILE* out_fil
 		if(num_cur_results && (EOF==fres || ch=='s' || ch=='e'))
 		{
 			for(i=0;i<num_cur_results;i++)
-			{
+			{  // printf("_______in testThrough before getNextAvailRes i== %d__________\n",i);
 				unsigned int doc_id=0;
 				unsigned int num_res=0;
 				unsigned int* query_ids=0;

@@ -60,14 +60,24 @@ int vectorSet(vector *v, int index, void *item)
 }
 
 void *vectorGet(vector *v, int index)
-{
+{   bool gotIn = false ;
     void *readData = NULL;
     if(v)
     {
+        //  printf("vectorGet v!=NULL with index %d\n",index);
+        //  printf("vectorGet v!=NULL with v->total %d\n",v->total);
         if ((index >= 0) && (index < v->total))
         {
+            // printf("vectorGet v!=NULL index>=0 index < v->total %d\n",v->total);
             readData = v->items[index];
+            gotIn=true;
         }
+       if (gotIn) {
+            //    printf("vectorGet v!=NULL 2  got in \n"); 
+           }else{
+            //    printf("vectorGet v!=NULL 2 DID NOT got in \n");
+               }
+
     }
     return readData;
 }

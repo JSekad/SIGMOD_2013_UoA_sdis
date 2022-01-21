@@ -16,6 +16,13 @@ typedef struct docs{
     Sort_list * qIdResults;
 }doc;
 
+
+struct arg_struct_doc{
+    int id;
+    char *wordsofdoc;
+};
+
+
 doc* initializedoc(int,char*);
 
 

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
 rec *CreateRecord(unsigned int id) {
 
     rec *new_entry = (rec *) malloc(sizeof(rec));
@@ -135,6 +136,32 @@ void DestroyEntryList(Entry_list **L) {
 }
 
 
+void appendList(Entry_list **l1,Entry_list **l2) {
+//     printf("in appendList\n");
+//     printf("in appendList list1\n");
+//     PrintEntryList(*l1);
+//     printf("in appendList list2\n");
+//     PrintEntryList(*l2);
+    
+    if ((*l1)->numOfNodes> 0){
+        if ((*l2)->numOfNodes==0) return;
+        (*l1)->last->next = (*l2)->first;
+        (*l2)->first->prev=(*l1)->last;
+        (*l1)->last=(*l2)->last;
+        (*l1)->numOfNodes=(*l1)->numOfNodes+(*l2)->numOfNodes;
+        return;
+    }
+
+      (*l1)->last=(*l2)->last;
+      (*l1)->first=(*l2)->first;
+      (*l1)->numOfNodes=(*l2)->numOfNodes;
+      
+      return;
+    
+}
+
+
+
 void InsertLastEntryList(Entry_list *L, ent *e) {
    //printf("InsertLastEntryList\n");
     //PrintPayload(&(e->payload));
@@ -197,10 +224,9 @@ ent *searchEntryList(Entry_list *L, word w) {
     ent *N = (ent *) L->first;
     while (N->next != NULL) {
         N = N->next;
-        if (!strcmp(N->w, w)) {
-            L->current = N->prev->next;
+        if (!strcmp(N->w, w))
+            L->current=N->prev->next;
             return N;
-        }
     }
     if (!strcmp(N->w, w)) return N;
     return NULL;

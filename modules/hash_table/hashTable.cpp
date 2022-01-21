@@ -173,36 +173,21 @@ entry  getNextEntryFromHash(hashTable *hash){
 
 
 
-Entry_list * MatchDocumentHashTable(hashTable *h,Entry_list *l){
-
-    Entry_list *reslist=CreateEntryList();
-    entry *e=getFirstEntryOfList(l);
-    while  (e!=NULL){
-       entry *cure=Exists(h,(*e)->w); 
-       if (cure!=NULL){
-
-           InsertLastEntryList(reslist,*cure);
-           changePayloadThreshHold(&(reslist->last->payload),0);
-       }
-       e=getNextEntryOfList(l);       
-    }
-    return reslist;
-}
-
-//void MatchDocumentHashTable2(hashTable *h,Entry_list *l,vector** vect){
-//    vector * v = *vect;
-//
-//    entry *e=getFirstEntryOfList(l);
-//    while  (e!=NULL){
-//        entry *cure=Exists(h,(*e)->w);
+// Entry_list * MatchDocumentHashTable(hashTable *h,Entry_list *l){
+//     printf("MatchDocumentHashTable hashTable numof entries %d\n",h->sizeofInput);
+//     Entry_list *reslist=CreateEntryList();
+//     entry *e=getFirstEntryOfList(l);
+//     while  (e!=NULL){
+//        entry *cure=Exists(h,(*e)->w); 
 //        if (cure!=NULL){
-//
-//
+
+//            InsertLastEntryList(reslist,*cure);
+//            changePayloadThreshHold(&(reslist->last->payload),0);
 //        }
-//        e=getNextEntryOfList(l);
-//    }
-//    return reslist;
-//}
+//        e=getNextEntryOfList(l);       
+//     }
+//     return reslist;
+// }
 
 
 

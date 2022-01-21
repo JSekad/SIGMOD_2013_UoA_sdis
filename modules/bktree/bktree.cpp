@@ -7,7 +7,8 @@ node* create_node(char* word,entry* ent)//if tree is empty creates the root of t
     int a=strlen(word);
     tree->word=(char*)malloc(sizeof(char) * (++a));
     strcpy(tree->word,word);
-    for(int i=0;i<=LEN;i++){
+    for(int i=0;i<=LEN;i++)
+    {
         tree->next[i]=NULL;
     }
     tree->entp = CreateEntry((*ent)->w,(*ent)->payload);
@@ -21,7 +22,7 @@ int find_distance(char** word1,char** word2,distanceAlgo distAlgo)//finds the ed
         a=editDistance(*word1,*word2);
         return a;
     }else if(distAlgo==HAMMING_DIST){
-//        printf("Im inside Distance----------------%s/-------%s/--------------------\n",*word1,*word2);
+//  printf("Im inside Distance----------------%s/-------%s/--------------------\n",*word1,*word2);
         a= hammingDistance(*word1,*word2);
         return a;
     }
@@ -57,8 +58,8 @@ void add_node(node** tree,char* word,entry* ent,distanceAlgo distAlgo)
 }
 
 void get_words_sub(Entry_list** res,node** tree,char* word,int n,distanceAlgo distAlgo)//uses recursion to traverse the tree and find matches for given word
-{
-    //printf("Im inside Distance----------------%s/-------%s/--------------------\n",((*tree)->word),word);
+{   
+  //  printf("Im inside Distance----------------%s/-------%s/--------------------\n",((*tree)->word),word);
     int dis=find_distance(&((*tree)->word),&word,distAlgo);
     int a=dis-n;
     if(a<0)
@@ -67,7 +68,7 @@ void get_words_sub(Entry_list** res,node** tree,char* word,int n,distanceAlgo di
     }
     int b=dis+n;
     if(dis<=n)
-    {
+    {   
         InsertLastEntryList(*res,(*tree)->entp);
         changePayloadThreshHold(&((*res)->last->payload),n);
     }
