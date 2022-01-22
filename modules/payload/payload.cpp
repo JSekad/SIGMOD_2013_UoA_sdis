@@ -34,7 +34,7 @@ Payload CreatePayload(int id,int dist,int type){
     Payload pld=(Payload)malloc(sizeof(payld));
     pld->distance = dist;
     pld->matchtype =type;
-    pld->thresholdFount=50;
+//    pld->thresholdFount=50;
     pld->iDList=CreateId(id);
     pld->lastiDlist=pld->iDList;
     pld->numOfNodes=1;
@@ -42,9 +42,9 @@ Payload CreatePayload(int id,int dist,int type){
     return pld;
 }
 
-void changePayloadThreshHold(Payload* pld,int i){
-    (*pld)->thresholdFount=i;
-}
+//void changePayloadThreshHold(Payload* pld,int i){
+//    (*pld)->thresholdFount=i;
+//}
 
 ids * getFirstIdOfPayload(Payload payload){
     payload->current=payload->iDList;

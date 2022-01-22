@@ -4,9 +4,11 @@
 #include "string.h"
 #include "stdlib.h"
 #include "distance.h"
+#include <pthread.h>
 
 #include "entry_list.h"
 #define LEN 30
+
 typedef struct treenode node;
 typedef node* inDex;
 

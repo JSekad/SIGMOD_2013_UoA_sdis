@@ -17,6 +17,7 @@ typedef struct Result{
     int id;
     int numOfWods;
     int* words;
+    bool done;
 }result;
 
 int initResult(result **r,int id,int numofwords);

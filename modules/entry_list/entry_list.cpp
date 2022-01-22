@@ -59,6 +59,7 @@ void InsertSortedInList(Sort_list *L,unsigned int id) {
     rec *m = CreateRecord(id);
 
     /* Special case for the head end */
+
     if (L->first == NULL
         || L->first->id
            > m->id) {
@@ -67,11 +68,15 @@ void InsertSortedInList(Sort_list *L,unsigned int id) {
         L->total++;
     }
     else {
+        if(L->first->id == m->id)
+            return;
         rec * current = L->first;
         while (current->next != NULL
                && current->next->id < m->id) {
             current = current->next;
         }
+        if (current->next != NULL && current->next->id == m->id)
+            return;
         m->next = current->next;
         current->next = m;
         L->total++;

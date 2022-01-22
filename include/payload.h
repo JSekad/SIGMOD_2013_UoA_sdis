@@ -1,5 +1,6 @@
 
-
+#ifndef PAYLOAD
+#define PAYLOAD
 
 typedef struct Ids{
     int idnumber;
@@ -15,7 +16,7 @@ typedef struct payload{
     ids * iDList;
     ids * lastiDlist;
     int distance;
-    int thresholdFount;
+//    int thresholdFount;
     int matchtype;
     ids *current;
     int numOfNodes;
@@ -49,3 +50,4 @@ void PrintPayload(Payload *L);
 
 void DestroyPayload(Payload p) ;
 
+#endif

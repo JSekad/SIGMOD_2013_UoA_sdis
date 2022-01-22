@@ -40,7 +40,7 @@ void add_node(node** tree,char* word,entry* ent,distanceAlgo distAlgo)
     {
 //        printf("Im inside Distance----------------%s/-------%s/--------------------\n",&((*tree)->word),&word);
         int b=find_distance(&((*tree)->word),&word,distAlgo);
-        if(!strcmp((*tree)->word,word))
+        if(b==0 && (*tree)->entp->payload->distance == (*ent)->payload->distance)
         {
             updatePayload(&((*tree)->entp->payload),(*ent)->payload->iDList->idnumber);
             return;
@@ -67,10 +67,10 @@ void get_words_sub(Entry_list** res,node** tree,char* word,int n,distanceAlgo di
         a=0;
     }
     int b=dis+n;
-    if(dis<=n)
-    {   
+    if(dis<=n &&(*tree)->entp->payload->distance==n)
+    {
         InsertLastEntryList(*res,(*tree)->entp);
-        changePayloadThreshHold(&((*res)->last->payload),n);
+        //changePayloadThreshHold(&((*res)->last->payload),n);
     }
    // else
     {
@@ -105,7 +105,7 @@ void delete_tree(node **tree)
         }
         else
         {
-            for (int j = 1; ((*tree)->next[j])==NULL; j++)
+            for (int j = 0; ((*tree)->next[j])==NULL; j++)
             {
                 delete_tree(&((*tree)->next[j]));
             }

@@ -38,6 +38,7 @@ int initResult(result ** r,int id,int numofwords){
     *r=(result*)malloc(sizeof(result));
     (*r)->id=id;
     (*r)->numOfWods=numofwords;
+    (*r)->done= false;
     (*r)->words=(int*)malloc(sizeof (int)*numofwords);
     for(int i=0;i<numofwords;i++){
         (*r)->words[i]=0;
