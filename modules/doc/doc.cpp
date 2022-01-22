@@ -25,7 +25,6 @@ doc* initializedoc(int id,char* wordsofdoc)
         }
         else
         {
-            //printf("NOT INSERT INTO\n");
             DestroyEntry(&Entry);
             token=strtok(NULL,del);
         }
@@ -33,7 +32,9 @@ doc* initializedoc(int id,char* wordsofdoc)
     free(token);
     docu->numofwords=counter;
     DestroyHashTable(ht);
-    docu->qIdResults=CreateSortList();
+
+    docu->qIdResults=(vector*)malloc(sizeof(vector));  
+    vector_init(docu->qIdResults,STARTING_VERTORS_CAPACITY);
     return docu;
 }
 
@@ -42,12 +43,8 @@ doc* initializedoc(int id,char* wordsofdoc)
 void DestroyDoc(doc *d){
 
     DestroyEntryList(&(d->list_of_words));
-//     for(int i=0;i<d->qIdResults->total;i++){
-//         free((unsigned int *)d->qIdResults->items[i]);
-//     }
-    DestroySortList(&(d->qIdResults));
+    
     free(d);
-//     free(d->qIdResults);
 
 
 }

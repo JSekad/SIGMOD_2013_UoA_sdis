@@ -147,19 +147,19 @@ void tpool_destroy(tpool_t *tm)
 
 
 bool tpool_add_work(tpool_t *tm, thread_func_t func, void *arg)
-{ // printf("Adding work to scheduler\n");
+{  
     tpool_work_t *work;
 
     if (tm == NULL)
         return false;
 
-  //  printf("scheduler not null\n");
+  
     work = tpool_work_create(func, arg);
     
     if (work == NULL)
         return false;
 
-  //  printf("work has been created\n");
+  
     pthread_mutex_lock(&(tm->work_mutex));
     if (tm->work_first == NULL) {
         tm->work_first = work;
@@ -171,12 +171,12 @@ bool tpool_add_work(tpool_t *tm, thread_func_t func, void *arg)
     
     pthread_cond_broadcast(&(tm->work_cond));
     pthread_mutex_unlock(&(tm->work_mutex));
- //    printf("returning true\n");
+ 
     return true;
 }
 
 void tpool_wait(tpool_t *tm)
-{  //  printf("in tpool waiting for thread \n");
+{ 
     if (tm == NULL)
         return;
     pthread_mutex_lock(&(tm->work_mutex));
@@ -190,6 +190,6 @@ void tpool_wait(tpool_t *tm)
     }
     pthread_mutex_unlock(&(tm->work_mutex));
 
-  //  printf("exiting tpool_wait \n");
+
 }
 

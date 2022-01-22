@@ -51,6 +51,6 @@ entry getFirstEntryFromHash(hashTable *);
 
 entry getNextEntryFromHash(hashTable *);
 
-// ent * getEntry(word);
+
 
 #endif

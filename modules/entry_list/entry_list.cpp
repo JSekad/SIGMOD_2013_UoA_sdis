@@ -54,8 +54,7 @@ void DestroySortList(Sort_list **L) {
 
 
 void InsertSortedInList(Sort_list *L,unsigned int id) {
-    //printf("InsertLastEntryList\n");
-    //PrintPayload(&(e->payload));
+   
     rec *m = CreateRecord(id);
 
     /* Special case for the head end */
@@ -85,8 +84,7 @@ void InsertSortedInList(Sort_list *L,unsigned int id) {
 }
 
 void InsertNonsortedInList(Sort_list *L,unsigned int id) {
-    //printf("InsertLastEntryList\n");
-    //PrintPayload(&(e->payload));
+   
     rec *m = CreateRecord(id);
 
     if (L->total > 0) {
@@ -142,11 +140,7 @@ void DestroyEntryList(Entry_list **L) {
 
 
 void appendList(Entry_list **l1,Entry_list **l2) {
-//     printf("in appendList\n");
-//     printf("in appendList list1\n");
-//     PrintEntryList(*l1);
-//     printf("in appendList list2\n");
-//     PrintEntryList(*l2);
+
     
     if ((*l1)->numOfNodes> 0){
         if ((*l2)->numOfNodes==0) return;
@@ -229,9 +223,9 @@ ent *searchEntryList(Entry_list *L, word w) {
     ent *N = (ent *) L->first;
     while (N->next != NULL) {
         N = N->next;
-        if (!strcmp(N->w, w))
+        if (!strcmp(N->w, w)){
             L->current=N->prev->next;
-            return N;
+            return N;}
     }
     if (!strcmp(N->w, w)) return N;
     return NULL;

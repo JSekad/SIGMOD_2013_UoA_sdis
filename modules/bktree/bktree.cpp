@@ -22,7 +22,6 @@ int find_distance(char** word1,char** word2,distanceAlgo distAlgo)//finds the ed
         a=editDistance(*word1,*word2);
         return a;
     }else if(distAlgo==HAMMING_DIST){
-//  printf("Im inside Distance----------------%s/-------%s/--------------------\n",*word1,*word2);
         a= hammingDistance(*word1,*word2);
         return a;
     }
@@ -31,14 +30,12 @@ int find_distance(char** word1,char** word2,distanceAlgo distAlgo)//finds the ed
 
 void add_node(node** tree,char* word,entry* ent,distanceAlgo distAlgo)
 {
-//    int a=strlen(word);
     if((*tree) == NULL)
     {
         *tree=create_node(word,ent);//if tree is empty creates root
     }
     else
     {
-//        printf("Im inside Distance----------------%s/-------%s/--------------------\n",&((*tree)->word),&word);
         int b=find_distance(&((*tree)->word),&word,distAlgo);
         if(b==0 && (*tree)->entp->payload->distance == (*ent)->payload->distance)
         {
@@ -59,7 +56,6 @@ void add_node(node** tree,char* word,entry* ent,distanceAlgo distAlgo)
 
 void get_words_sub(Entry_list** res,node** tree,char* word,int n,distanceAlgo distAlgo)//uses recursion to traverse the tree and find matches for given word
 {   
-  //  printf("Im inside Distance----------------%s/-------%s/--------------------\n",((*tree)->word),word);
     int dis=find_distance(&((*tree)->word),&word,distAlgo);
     int a=dis-n;
     if(a<0)
@@ -70,14 +66,9 @@ void get_words_sub(Entry_list** res,node** tree,char* word,int n,distanceAlgo di
     if(dis<=n &&(*tree)->entp->payload->distance==n)
     {
         InsertLastEntryList(*res,(*tree)->entp);
-        //changePayloadThreshHold(&((*res)->last->payload),n);
     }
    // else
     {
-        //changePayloadThreshHold(&((*tree)->entp->payload),n);
-        //(*tree)->entp->payload->thresholdFount=n;
-        //InsertLastEntryList(*res,(*tree)->entp);
-        //changePayloadThreshHold(&((*res)->last->payload),n);
         for (int i = a;(i<=b) ; i++)
         {
             if(((*tree)->next[i])!=NULL) {

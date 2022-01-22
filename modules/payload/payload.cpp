@@ -26,7 +26,6 @@ void DestroyId(ids * idstodestroy) {
 
 
 Payload CreatePayload(int id,int dist,int type){
-  //  printf("CreatePayload\n");
     
     if(id==-1 && dist==-1 && type==-1){
         return NULL;
@@ -34,17 +33,15 @@ Payload CreatePayload(int id,int dist,int type){
     Payload pld=(Payload)malloc(sizeof(payld));
     pld->distance = dist;
     pld->matchtype =type;
-//    pld->thresholdFount=50;
     pld->iDList=CreateId(id);
     pld->lastiDlist=pld->iDList;
     pld->numOfNodes=1;
-  //  PrintPayload(&pld);
     return pld;
 }
 
-//void changePayloadThreshHold(Payload* pld,int i){
-//    (*pld)->thresholdFount=i;
-//}
+void changePayloadThreshHold(Payload* pld,int i){
+    (*pld)->thresholdFount=i;
+}
 
 ids * getFirstIdOfPayload(Payload payload){
     payload->current=payload->iDList;
@@ -82,8 +79,6 @@ void DestroyPayload(Payload p) {
 
 
 void updatePayload(Payload *payload,int id){
-   //  printf("update payload ");
-  //   PrintPayload(payload);
      InsertLastPayload(payload,id);
 
 }
@@ -114,7 +109,6 @@ void InsertLastPayload(Payload *payload,int id) {
 
 
 void PrintPayload(Payload *L) {
-   // printf("Distance : %d \nMatchtype :%d\n",(*L)->distance,(*L)->matchtype);
     printf("(");
 
     ids *N = (ids *) (*L)->iDList;

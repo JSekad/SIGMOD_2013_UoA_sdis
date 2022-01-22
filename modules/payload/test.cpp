@@ -53,97 +53,12 @@ void test_UpdatePayload(void){
 
 
 
-// void test_create_Payload(void){
-    
 
-//       hashTable *table=CreateHashTable();
-    
-//        Payload p=CreatePayload(-1,-1,-1);
-//        ent *e=CreateEntry("niaou",p);
-//        ent *e2=CreateEntry("niaou2",p);
-//        ent *e3=CreateEntry("niaou3",p);
-//        ent *e4=CreateEntry("niaou4",p);
-//        ent *e5=CreateEntry("niaou5",p);
-
-//        insertEntry(table,e, UPDATE);
-//        insertEntry(table,e2,UPDATE);
-//        insertEntry(table,e3,UPDATE);
-//        insertEntry(table,e4,UPDATE);
-//       insertEntry(table,e5,UPDATE);
-
-
-//        Entry_list *l = CreateEntryList();
-        
-//        InsertLastEntryList(l,e);  
-//        InsertLastEntryList(l,e2);
-//        InsertLastEntryList(l,e3);
-//        InsertLastEntryList(l,e4); 
-       
-//        ent *e10=CreateEntry("niaou10",p);
-//        ent *e11=CreateEntry("niaou11",p);
-//        ent *e12=CreateEntry("niaou12",p);
-
-//        InsertLastEntryList(l,e10);  
-//        InsertLastEntryList(l,e11);
-//        InsertLastEntryList(l,e12);
-        
-       
-       
-       
-       
-//       Entry_list *resl=MatchDocumentHashTable(table,l); 
-      
-
-
-
-
-//      TEST_CHECK(resl->numOfNodes==4);
-
-
-//      PrintEntryList(resl);
-
-
-
-
-
-
-
-
-        
-//       DestroyEntryList(&l);
-//       DestroyEntryList(&resl);
-      
-
-
-
-//        DestroyEntry(&e);  
-//        DestroyEntry(&e2);  
-//        DestroyEntry(&e3);
-//        DestroyEntry(&e4);
-//        DestroyEntry(&e5);
-//        DestroyEntry(&e10);
-//        DestroyEntry(&e11);
-//        DestroyEntry(&e12);
-       
-      
-      
-//   //     DestroyHashTable(table);
-       
-       
-
-
-   
-// }
 
 
 TEST_LIST = {
      { "create_payload", test_create_Payload },
     { "tUpdatePayload", test_UpdatePayload },
-  //  { "insert_hashTable", test_insert_hashTable },
-  //   {"exists_hashTable", test_exists_hashTable},
-   //  {"print_hashTable", test_print_hashTable},
-   ///  { "getFirstEntryFromHash", test_getFirstEntryFromHash },
-   //   { "getNextEntryFromHash", test_getNextEntryFromHash},
-   //  { "match_document_entry_list", test_match_document_HashTable},
+ 
 	 { NULL, NULL } // τερματίζουμε τη λίστα με NULL
  };

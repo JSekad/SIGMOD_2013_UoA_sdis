@@ -4,8 +4,7 @@
 
 ent *CreateEntry(char *string, Payload payload) {
 
-    // printf("CreateEntry\n");
-    // PrintPayload(&payload);
+  
     ent *new_entry = (ent *) malloc(sizeof(ent));
 
     new_entry->prev = NULL;
@@ -43,7 +42,7 @@ ent *CreateEntry(char *string, Payload payload) {
 }
 
 void DestroyEntry(ent **e) {
-    //free(e->payload);
+  
     
     if ((*e)->payload)   DestroyPayload((*e)->payload);
     free((*e)->w);

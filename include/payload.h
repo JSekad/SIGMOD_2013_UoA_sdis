@@ -16,7 +16,7 @@ typedef struct payload{
     ids * iDList;
     ids * lastiDlist;
     int distance;
-//    int thresholdFount;
+    int thresholdFount;
     int matchtype;
     ids *current;
     int numOfNodes;

@@ -28,7 +28,6 @@ void DestroyHashTable(hashTable *hash) {
 
 
 int HashFuction(hashTable *hash,char* key){
-    // printf("HashFuction size of hash %d\n",hash->sizeOfHash);
     int h=0, a=33;
     for (; *key!='\0'; key++)
         h=(a*h + *key) % hash->sizeOfHash;
@@ -42,16 +41,13 @@ int insertEntry(hashTable *hash,ent *e,HasInsertionType type){
 
 
     hash->sizeofInput++;
-    //  printf("%s",e->w);
     int pos=0;
     pos=HashFuction(hash,e->w);
 
-    // printf("%d\n\n\n",pos);
 
     if (hash->entrylist[pos]==NULL){
 
 
-//              printf("is null\n");
 
         hash->entrylist[pos]=CreateEntryList();
         InsertLastEntryList(hash->entrylist[pos],e);
@@ -60,7 +56,6 @@ int insertEntry(hashTable *hash,ent *e,HasInsertionType type){
     }
     else{
         ent *e2=searchEntryList(hash->entrylist[pos],e->w);
-        //printf("e2 in insertEntry %s\n\n\n\n",e2->w);
         if (e2==NULL){
             InsertLastEntryList(hash->entrylist[pos],e);
             return 1;
@@ -91,7 +86,6 @@ entry*   Exists(hashTable *hash,word w){
 
 
     if(hash->entrylist[pos]!=NULL){
-        //PrintEntryList(hash->entrylist[pos]);
         entry* e=getFirstEntryOfList(hash->entrylist[pos]);
         while ((strcmp((*e)->w, w)!=0)){
             e=getNextEntryOfList(hash->entrylist[pos]);
@@ -173,66 +167,9 @@ entry  getNextEntryFromHash(hashTable *hash){
 
 
 
-// Entry_list * MatchDocumentHashTable(hashTable *h,Entry_list *l){
-//     printf("MatchDocumentHashTable hashTable numof entries %d\n",h->sizeofInput);
-//     Entry_list *reslist=CreateEntryList();
-//     entry *e=getFirstEntryOfList(l);
-//     while  (e!=NULL){
-//        entry *cure=Exists(h,(*e)->w); 
-//        if (cure!=NULL){
-
-//            InsertLastEntryList(reslist,*cure);
-//            changePayloadThreshHold(&(reslist->last->payload),0);
-//        }
-//        e=getNextEntryOfList(l);       
-//     }
-//     return reslist;
-// }
 
 
 
 
 
-//      void HashTable::deleteByid(int id){
 
-
-//         int pos = HashFuction(id);
-
-
-
-//         hasharray[pos].eraseNode(id);
-
-
-//      }
-
-
-//      void HashTable::lookUP(int id){
-
-//         if (!ifExists(id)){
-//           cout<<"- Student "<<id<<"does not exist"<<endl;
-//           return;
-//         }
-
-
-//         int pos=HashFuction(id);
-
-
-//         Listnode *node=hasharray[pos].returnNodeById(id);
-//         node->getItem()->printInfo();
-//      }
-
-
-
-
-//      Student* HashTable::getStudent(int id){
-
-//         int pos=HashFuction(id);
-
-
-
-//        Listnode *n = hasharray[pos].returnNodeById(id);
-
-//         return n->getItem();
-
-
-//      }

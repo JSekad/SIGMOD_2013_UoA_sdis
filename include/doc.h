@@ -13,7 +13,7 @@ typedef struct docs{
     int docid;
     int numofwords;
     Entry_list* list_of_words;
-    Sort_list * qIdResults;
+    vector * qIdResults;
 }doc;
 
 
