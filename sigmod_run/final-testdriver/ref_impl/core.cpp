@@ -79,7 +79,7 @@ using namespace std;
 ErrorCode InitializeIndex(){
 
     res=(struct returnStruct*)malloc(sizeof(struct returnStruct));
-    pool2=tpool_create(3);
+    pool2=tpool_create(2);
     void *ok = NULL;
     queries =(vector*) malloc(sizeof(vector));
     vector_init(queries,STARTING_VERTORS_CAPACITY);
