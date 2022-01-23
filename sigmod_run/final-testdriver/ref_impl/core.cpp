@@ -79,7 +79,7 @@ using namespace std;
 ErrorCode InitializeIndex(){
 
     res=(struct returnStruct*)malloc(sizeof(struct returnStruct));
-    pool2=tpool_create(2);
+    pool2=tpool_create(3);
     void *ok = NULL;
     queries =(vector*) malloc(sizeof(vector));
     vector_init(queries,STARTING_VERTORS_CAPACITY);
@@ -309,6 +309,10 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
     appendList(&ResultList,&ResultList2);
     appendList(&ResultList,&ResultList3);
 
+    free(exarg);
+    free(hamarg);
+    free(editarg);
+
 
     //FIND THE RESULTS OF DOCUMENT AND PARSE IT IN THE STRUCT
     entry *e=NULL;
@@ -369,15 +373,36 @@ ErrorCode MatchDocument(DocID doc_id, const char* doc_str)
         }
         //REINITIALIZE RESULTS VECTOR
     }else{
-        // DestroyEntryList(&ResultList);
-        // DestroyEntryList(&ResultList2);
+         DestroyEntryList(&ResultList);
+         free(docarg->wordsofdoc);
+       docarg->wordsofdoc=NULL;
+       free(docarg);
+       ResultList2->first=NULL;
+       ResultList2->last=NULL;
+       ResultList2->current=NULL;
+       free(ResultList2);
+       ResultList3->first=NULL;
+       ResultList3->last=NULL;
+       ResultList3->current=NULL;
+       free(ResultList3);
         // DestroyEntryList(&ResultList3);
  
         vectorPushBack(d->qIdResults, NULL);
        
         return EC_FAIL;
     }
-    // DestroyEntryList(&ResultList);
+     DestroyEntryList(&ResultList);
+    free(docarg->wordsofdoc);
+    docarg->wordsofdoc=NULL;
+    free(docarg);
+    ResultList2->first=NULL;
+    ResultList2->last=NULL;
+    ResultList2->current=NULL;
+    free(ResultList2);
+    ResultList3->first=NULL;
+    ResultList3->last=NULL;
+    ResultList3->current=NULL;
+    free(ResultList3);
     //  DestroyEntryList(&ResultList2);
     //   DestroyEntryList(&ResultList3);
    

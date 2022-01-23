@@ -42,6 +42,11 @@ doc* initializedoc(int id,char* wordsofdoc)
 
 void DestroyDoc(doc *d){
 
+    for(int i=0;i<d->qIdResults->total;i++){
+        free((unsigned int *)d->qIdResults->items[i]);
+    }
+    vectorFree(d->qIdResults);
+
     DestroyEntryList(&(d->list_of_words));
     
     free(d);
